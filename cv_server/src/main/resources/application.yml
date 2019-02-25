@@ -1,0 +1,17 @@
+server:
+  servlet:
+    context-path: /crud/best-practice
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/carinvoces
+    username: carlos
+    password: carlos
+
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+        jdbc.lob.non_contextual_creation: true
+        enable_lazy_load_no_trans: true
+    generate-ddl: false
+
