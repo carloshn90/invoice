@@ -8,11 +8,11 @@
 		<version>2.1.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example.crud</groupId>
-	<artifactId>bestPractice</artifactId>
+	<groupId>com.carlos.invoice</groupId>
+	<artifactId>cv_server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bestPractice</name>
-	<description>Demo project for Spring Boot</description>
+	<name>cv_server</name>
+	<description>Carlos Invoice server</description>
 
 	<properties>
 		<java.version>1.8</java.version>
