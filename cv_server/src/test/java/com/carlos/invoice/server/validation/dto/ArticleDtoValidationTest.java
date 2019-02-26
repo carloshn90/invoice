@@ -1,0 +1,54 @@
+package com.carlos.invoice.server.validation.dto;
+
+import com.carlos.invoice.server.dto.ArticleDto;
+import org.junit.Before;
+import org.junit.Test;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+public class ArticleDtoValidationTest {
+
+    private Validator validator;
+    private List<String> validationMessageList;
+
+    @Before
+    public void setUp() {
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        this.validator = validatorFactory.getValidator();
+
+        validationMessageList = new ArrayList<>();
+        validationMessageList.add("ArticleDto: price is null");
+        validationMessageList.add("ArticleDto: unit is null");
+        validationMessageList.add("ArticleDto: active is null");
+        validationMessageList.add("ArticleDto: name is null, empty or blank");
+    }
+
+    @Test
+    public void invoiceDto_CheckValidations() {
+        ArticleDto articleDto = new ArticleDto();
+
+        Set<ConstraintViolation<ArticleDto>> violationSet = this.validator.validate(articleDto);
+
+        assertThat(violationSet, hasSize(this.validationMessageList.size()));
+
+        Set<String> violationMessageSet = violationSet
+                .stream()
+                .map(ConstraintViolation::getMessageTemplate)
+                .collect(Collectors.toSet());
+
+        for (String validationMessage : this.validationMessageList) {
+            assertTrue(violationMessageSet.contains(validationMessage));
+        }
+    }
+}
