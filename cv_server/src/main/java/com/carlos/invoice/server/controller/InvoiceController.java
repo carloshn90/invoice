@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Validated
-@RestController("/invoices")
+@RestController
+@RequestMapping("/invoices")
 public class InvoiceController extends ExceptionHandlingController {
     private static final Logger logger = LoggerFactory.getLogger(InvoiceController.class);
     private static final String CLASS = InvoiceController.class.toString();
@@ -27,7 +28,7 @@ public class InvoiceController extends ExceptionHandlingController {
         this.invoiceService = invoiceService;
     }
 
-    @PostMapping(value = "/invoices")
+    @PostMapping
     public ResponseEntity create(@RequestBody InvoiceDto invoiceDto) {
         logger.info(CLASS + ": Create invoice");
 
@@ -36,7 +37,7 @@ public class InvoiceController extends ExceptionHandlingController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping(value = "/invoices/{invoice-id}")
+    @PutMapping(value = "/{invoice-id}")
     @ValidIdExistInDto(message = "InvoiceController: invoice-id is not present in the invoiceDto")
     public ResponseEntity update(@PathVariable("invoice-id") Long invoiceId, @RequestBody InvoiceDto invoiceDto) {
         logger.info(CLASS + ": Update invoice " + invoiceId);

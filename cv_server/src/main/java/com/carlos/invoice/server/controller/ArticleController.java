@@ -13,7 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Validated
-@RestController("/articles")
+@RestController
+@RequestMapping("/articles")
 public class ArticleController extends ExceptionHandlingController {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
@@ -26,7 +27,7 @@ public class ArticleController extends ExceptionHandlingController {
         this.articleService = articleService;
     }
 
-    @PostMapping(value = "/articles")
+    @PostMapping
     public ResponseEntity create(@RequestBody ArticleDto articleDto) {
         logger.info(CLASS + ": Create article");
 
@@ -35,7 +36,7 @@ public class ArticleController extends ExceptionHandlingController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping(value = "/articles/{article-id}")
+    @PutMapping(value = "/{article-id}")
     @ValidIdExistInDto(message = "ArticleController: article-id is not present in the articleDto")
     public ResponseEntity update(@PathVariable("article-id") Long articleId, @RequestBody ArticleDto articleDto) {
         logger.info(CLASS + ": Update article " + articleId);
