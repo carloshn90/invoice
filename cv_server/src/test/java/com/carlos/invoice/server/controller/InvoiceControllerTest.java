@@ -125,10 +125,10 @@ public class InvoiceControllerTest {
     @Test
     public void update_PutExist_Ok() throws Exception {
 
+        Long invoiceId = 123L;
         InvoiceDto invoiceDto = new InvoiceDto();
-        invoiceDto.setId(123L);
+        invoiceDto.setId(invoiceId);
         String invoiceDtoJson = objectMapper.writeValueAsString(invoiceDto);
-        String invoiceId = invoiceDto.getId().toString();
 
         this.mockMvc
                 .perform(

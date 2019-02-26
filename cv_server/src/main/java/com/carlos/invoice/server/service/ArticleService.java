@@ -3,6 +3,7 @@ package com.carlos.invoice.server.service;
 import com.carlos.invoice.server.dao.ArticleDao;
 import com.carlos.invoice.server.dto.ArticleDto;
 import com.carlos.invoice.server.model.Article;
+import com.carlos.invoice.server.validation.ValidArticleDtoUpdate;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,11 @@ import javax.validation.Valid;
 @Validated
 @Transactional
 public class ArticleService {
+
     private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
     private static final String CLASS = ArticleService.class.toString();
+
+    private static final String VALID_ARTICLE_DTO_MESSAGE = "ArticleService: The article code is not valid or doesn't exist for this article";
 
     private ConversionService conversionService;
     private ArticleDao articleDao;
@@ -37,6 +41,15 @@ public class ArticleService {
         Article article = this.conversionService.convert(articleDto, Article.class);
 
         article.setCode(this.createRandomCode());
+
+        this.articleDao.save(article);
+    }
+
+    public void update(@Valid @ValidArticleDtoUpdate(message = VALID_ARTICLE_DTO_MESSAGE) ArticleDto articleDto) {
+
+        logger.info(CLASS + ": update article");
+
+        Article article = this.conversionService.convert(articleDto, Article.class);
 
         this.articleDao.save(article);
     }

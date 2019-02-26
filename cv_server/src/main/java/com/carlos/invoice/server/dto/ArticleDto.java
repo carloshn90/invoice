@@ -5,7 +5,7 @@ import com.carlos.invoice.server.enums.UnitEnum;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class ArticleDto {
+public class ArticleDto implements IUpgradableDto {
 
     private Long id;
 

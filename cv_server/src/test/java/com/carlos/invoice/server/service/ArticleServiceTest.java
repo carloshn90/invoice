@@ -61,4 +61,22 @@ public class ArticleServiceTest {
         inOrder.verify(this.conversionService).convert(articleDtoMock, Article.class);
         inOrder.verify(this.articleDao).save(articleMock);
     }
+
+    @Test()
+    public void update_InvoiceDto_Correct() {
+        ArticleDto articleDtoMock = mock(ArticleDto.class);
+        Article articleMock = mock(Article.class);
+
+        when(this.conversionService.convert(articleDtoMock, Article.class)).thenReturn(articleMock);
+        when(this.articleDao.save(articleMock)).thenReturn(articleMock);
+
+        this.articleService.update(articleDtoMock);
+
+        verify(this.conversionService, times(1)).convert(articleDtoMock, Article.class);
+        verify(this.articleDao, times(1)).save(articleMock);
+
+        InOrder inOrder = inOrder(this.conversionService, this.articleDao);
+        inOrder.verify(this.conversionService).convert(articleDtoMock, Article.class);
+        inOrder.verify(this.articleDao).save(articleMock);
+    }
 }

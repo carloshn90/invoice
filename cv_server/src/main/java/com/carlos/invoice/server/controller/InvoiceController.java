@@ -27,7 +27,7 @@ public class InvoiceController extends ExceptionHandlingController {
         this.invoiceService = invoiceService;
     }
 
-    @PostMapping
+    @PostMapping(value = "/invoices")
     public ResponseEntity create(@RequestBody InvoiceDto invoiceDto) {
         logger.info(CLASS + ": Create invoice");
 
