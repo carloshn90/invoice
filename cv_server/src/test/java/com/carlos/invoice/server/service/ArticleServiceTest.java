@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -86,7 +87,17 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void find_Correct_ReturnInvoiceDtoList() {
+    public void find_EmptyDB_ReturnEmptyList() {
+
+        when(this.articleDao.findAll()).thenReturn(Collections.emptyList());
+
+        List<ArticleDto> articleDtoList = this.articleService.find();
+
+        assertTrue(articleDtoList.isEmpty());
+    }
+
+    @Test
+    public void find_Correct_ReturnArticleDtoList() {
 
         Article articleMock = mock(Article.class);
         List<Article> articleListMock = Collections.singletonList(articleMock);

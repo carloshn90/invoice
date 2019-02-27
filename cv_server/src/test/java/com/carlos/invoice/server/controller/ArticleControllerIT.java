@@ -1,6 +1,6 @@
 package com.carlos.invoice.server.controller;
 
-import com.carlos.invoice.server.dto.InvoiceDto;
+import com.carlos.invoice.server.dto.ArticleDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Test;
@@ -24,12 +24,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(secure = false)
 @Transactional
-public class InvoiceControllerIT {
+public class ArticleControllerIT {
 
-    private final static String INVOICES_PATH = "/invoices";
+    private final static String ARTICLE_PATH = "/articles";
 //    It is recommended to use spinal-case (which is highlighted by RFC3986), this case is used by Google,
 //    PayPal and other big companies.
-    private final static String INVOICES_ID_PATH_VARIABLE = "/invoices/{invoice-id}";
+    private final static String ARTICLE_ID_PATH_VARIABLE = "/articles/{article-id}";
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,69 +40,60 @@ public class InvoiceControllerIT {
     @Test
     public void update_CheckIdValidationError_BadRequest() throws Exception {
 
-        InvoiceDto invoiceDto = new InvoiceDto();
-        String invoiceDtoJson = objectMapper.writeValueAsString(invoiceDto);
-        Long invoiceId = 123L;
+        ArticleDto articleDto = new ArticleDto();
+        String articleDtoJson = objectMapper.writeValueAsString(articleDto);
+        Long articleId = 123L;
 
         this.mockMvc
                 .perform(
-                        put(INVOICES_ID_PATH_VARIABLE, invoiceId)
+                        put(ARTICLE_ID_PATH_VARIABLE, articleId)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(invoiceDtoJson)
+                                .content(articleDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isBadRequest());
 
     }
 
     @Test
-    public void create_InvoiceToUpdateJson_Ok() throws Exception {
+    public void create_ArticleToUpdateJson_Ok() throws Exception {
 
-        String invoiceDtoJson = "{\"personalDataDto\":{\"name\":\"Carlos_U\",\"subName\":" +
-                "\"Hernandez_U\",\"personalIdentificationDto\":{\"documentTypeEnum\":\"DNI\"," +
-                "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
-                "\"lineItemDtoList\":[{\"numberOfItem\":2,\"code\":\"123456_U\"," +
-                "\"priceItem\":7.0,\"total\":14.0}],\"total\":14.0}";
+        String articleDtoJson = "{\"price\":12.36,\"unit\":\"KG\",\"active\":true,\"name\":" +
+                "\"Tomatoes\",\"description\":\"Salad Tomatoes\"}";
 
         this.mockMvc
                 .perform(
-                        post(INVOICES_PATH)
+                        post(ARTICLE_PATH)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(invoiceDtoJson)
+                                .content(articleDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isCreated());
     }
 
     @Test
-    public void update_InvoiceToUpdateJson_Ok() throws Exception {
+    public void update_ArticleToUpdateJson_Ok() throws Exception {
 
-        Long invoiceId = 1L;
-        String invoiceDtoJson = "{\"id\":1,\"personalDataDto\":{\"id\":1,\"name\":\"Carlos\",\"subName\":" +
-                "\"Hernandez\",\"personalIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
-                "\"documentNumber\":\"4475896X\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
-                "\"lineItemDtoList\":[{\"id\":1,\"numberOfItem\":1,\"code\":\"123456\"," +
-                "\"priceItem\":14.0,\"total\":14.0}],\"total\":14.0}";
+        Long articleId = 1L;
+        String articleDtoJson = "{\"id\":1,\"code\":\"1236758ASM\",\"price\":12.36,\"unit\":\"KG\",\"active\":true," +
+                "\"name\":\"Tomatoes\",\"description\":\"Salad Tomatoes\"}";
 
         this.mockMvc
                 .perform(
-                        put(INVOICES_ID_PATH_VARIABLE, invoiceId)
+                        put(ARTICLE_ID_PATH_VARIABLE, articleId)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(invoiceDtoJson)
+                                .content(articleDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk());
     }
 
     @Test
-    public void find_InvoiceDtoJson() throws Exception {
+    public void find_ArticleDtoJson() throws Exception {
 
-        String resultExpected = "[{\"id\":1,\"personalDataDto\":{\"id\":1,\"name\":\"Carlos_U\",\"subName\":" +
-                "\"Hernandez_U\",\"personalIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
-                "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
-                "\"lineItemDtoList\":[{\"id\":1,\"numberOfItem\":2,\"code\":\"123456_U\"," +
-                "\"priceItem\":7.0,\"total\":14.0}],\"total\":14.0}]";
+        String resultExpected = "[{\"id\":1,\"code\":\"1236758ASM\",\"price\":12.36,\"unit\":\"KG\",\"active\":true," +
+                "\"name\":\"Tomatoes\",\"description\":\"Salad Tomatoes\"}]";
 
         MvcResult mvcResult = this.mockMvc
                 .perform(
-                        get(INVOICES_PATH)
+                        get(ARTICLE_PATH)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
