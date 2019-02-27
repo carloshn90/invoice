@@ -14,10 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -96,13 +93,12 @@ public class InvoiceToDtoConverterTest {
 
         Invoice invoiceMock = mock(Invoice.class);
         LineItemDto lineItemDtoMock = mock(LineItemDto.class);
-        LinkedHashSet<LineItemDto> lineItemDtoHashSetMock = new LinkedHashSet<>();
-        lineItemDtoHashSetMock.add(lineItemDtoMock);
-        TypeDescriptor typeDescriptorFrom = TypeDescriptor.collection(Collection.class, TypeDescriptor.valueOf(lineItemListMock.getClass()));
-        TypeDescriptor typeDescriptorTo = TypeDescriptor.collection(Collection.class, TypeDescriptor.valueOf(LineItemDto.class));
+        List<LineItemDto> lineItemDtoList = Collections.singletonList(lineItemDtoMock);
+        TypeDescriptor typeDescriptorFrom = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(lineItemListMock.getClass()));
+        TypeDescriptor typeDescriptorTo = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(LineItemDto.class));
 
         when(invoiceMock.getLineItemList()).thenReturn(this.lineItemListMock);
-        when(this.conversionService.convert(this.lineItemListMock,typeDescriptorFrom, typeDescriptorTo)).thenReturn(lineItemDtoHashSetMock);
+        when(this.conversionService.convert(this.lineItemListMock,typeDescriptorFrom, typeDescriptorTo)).thenReturn(lineItemDtoList);
 
         this.invoiceToDtoConverter.convert(invoiceMock);
 

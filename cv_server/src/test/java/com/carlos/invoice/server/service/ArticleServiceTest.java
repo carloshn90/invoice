@@ -11,7 +11,12 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.TypeDescriptor;
 
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -78,5 +83,31 @@ public class ArticleServiceTest {
         InOrder inOrder = inOrder(this.conversionService, this.articleDao);
         inOrder.verify(this.conversionService).convert(articleDtoMock, Article.class);
         inOrder.verify(this.articleDao).save(articleMock);
+    }
+
+    @Test
+    public void find_Correct_ReturnInvoiceDtoList() {
+
+        Article articleMock = mock(Article.class);
+        List<Article> articleListMock = Collections.singletonList(articleMock);
+        ArticleDto articleDtoMock = mock(ArticleDto.class);
+        List<ArticleDto> articleDtoListMock = Collections.singletonList(articleDtoMock);
+        TypeDescriptor typeDescriptorFrom = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(articleListMock.getClass()));
+        TypeDescriptor typeDescriptorTo = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(ArticleDto.class));
+
+
+        when(this.articleDao.findAll()).thenReturn(articleListMock);
+        when(this.conversionService.convert(articleListMock, typeDescriptorFrom, typeDescriptorTo)).thenReturn(articleDtoListMock);
+
+        List<ArticleDto> invoiceDtoResultList = this.articleService.find();
+
+        assertEquals(invoiceDtoResultList, articleDtoListMock);
+
+        verify(this.articleDao, times(1)).findAll();
+        verify(this.conversionService, times(1)).convert(articleListMock, typeDescriptorFrom, typeDescriptorTo);
+
+        InOrder inOrder = inOrder(this.conversionService, this.articleDao);
+        inOrder.verify(this.articleDao).findAll();
+        inOrder.verify(this.conversionService).convert(articleListMock, typeDescriptorFrom, typeDescriptorTo);
     }
 }

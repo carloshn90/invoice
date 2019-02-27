@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Validated
 @RestController
 @RequestMapping("/articles")
@@ -44,5 +46,12 @@ public class ArticleController extends ExceptionHandlingController {
         this.articleService.update(articleDto);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping
+    public List<ArticleDto> find() {
+        logger.info(CLASS + ": Find all articles");
+
+        return this.articleService.find();
     }
 }

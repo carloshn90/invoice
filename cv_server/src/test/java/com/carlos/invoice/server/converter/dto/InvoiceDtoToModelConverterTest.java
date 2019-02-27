@@ -95,13 +95,12 @@ public class InvoiceDtoToModelConverterTest {
 
         InvoiceDto invoiceDto = mock(InvoiceDto.class);
         LineItem lineItemMock = mock(LineItem.class);
-        LinkedHashSet<LineItem> lineItemHashSetMock = new LinkedHashSet<>();
-        lineItemHashSetMock.add(lineItemMock);
-        TypeDescriptor typeDescriptorFrom = TypeDescriptor.collection(Collection.class, TypeDescriptor.valueOf(this.lineItemDtoListMock.getClass()));
-        TypeDescriptor typeDescriptorTo = TypeDescriptor.collection(Collection.class, TypeDescriptor.valueOf(LineItem.class));
+        List<LineItem> lineItemList = Collections.singletonList(lineItemMock);
+        TypeDescriptor typeDescriptorFrom = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(this.lineItemDtoListMock.getClass()));
+        TypeDescriptor typeDescriptorTo = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(LineItem.class));
 
         when(invoiceDto.getLineItemDtoList()).thenReturn(this.lineItemDtoListMock);
-        when(this.conversionService.convert(this.lineItemDtoListMock,typeDescriptorFrom, typeDescriptorTo)).thenReturn(lineItemHashSetMock);
+        when(this.conversionService.convert(this.lineItemDtoListMock,typeDescriptorFrom, typeDescriptorTo)).thenReturn(lineItemList);
 
         this.invoiceDtoToModelConverter.convert(invoiceDto);
 

@@ -2,6 +2,7 @@ package com.carlos.invoice.server.controller;
 
 import com.carlos.invoice.server.dto.ArticleDto;
 import com.carlos.invoice.server.service.ArticleService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,16 +12,22 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.validation.ConstraintViolationException;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -115,5 +122,52 @@ public class ArticleControllerTest {
                                 .accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isBadRequest());
 
+    }
+
+    @Test
+    public void find_NotResult_EmptyBodyOk() throws Exception {
+
+        List<ArticleDto> articleDtoList = Collections.emptyList();
+        TypeReference<List<ArticleDto>> articleDtoListTypeReference = new TypeReference<List<ArticleDto>>(){};
+
+        when(this.articleService.find()).thenReturn(articleDtoList);
+
+        MvcResult mvcResult = this.mockMvc
+                .perform(
+                        get(ARTICLE_PATH)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String resultJson = mvcResult.getResponse().getContentAsString();
+        List<ArticleDto> articleDtoResultList = this.objectMapper.readValue(resultJson, articleDtoListTypeReference);
+        assertThat(articleDtoResultList, hasSize(0));
+    }
+
+    @Test
+    public void find_Result_ResultInBodyOk() throws Exception {
+
+        ArticleDto articleDto = new ArticleDto();
+        articleDto.setId(123L);
+        List<ArticleDto> articleDtoList = Collections.singletonList(articleDto);
+        TypeReference<List<ArticleDto>> articleDtoListTypeReference = new TypeReference<List<ArticleDto>>(){};
+
+        when(this.articleService.find()).thenReturn(articleDtoList);
+
+        MvcResult mvcResult = this.mockMvc
+                .perform(
+                        get(ARTICLE_PATH)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String resultJson = mvcResult.getResponse().getContentAsString();
+        List<ArticleDto> articleDtoResultList = this.objectMapper.readValue(resultJson, articleDtoListTypeReference);
+        assertThat(articleDtoResultList, hasSize(1));
+        assertEquals(articleDtoResultList.get(0).getId(), articleDto.getId());
     }
 }

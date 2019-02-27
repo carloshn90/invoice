@@ -124,7 +124,7 @@ public class InvoiceServiceTest {
         List<Invoice> invoiceListMock = Collections.singletonList(invoiceMock);
         InvoiceDto invoiceDtoMock = mock(InvoiceDto.class);
         List<InvoiceDto> invoiceDtoListMock = Collections.singletonList(invoiceDtoMock);
-        TypeDescriptor typeDescriptorFrom = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(Invoice.class));
+        TypeDescriptor typeDescriptorFrom = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(invoiceListMock.getClass()));
         TypeDescriptor typeDescriptorTo = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(InvoiceDto.class));
 
 

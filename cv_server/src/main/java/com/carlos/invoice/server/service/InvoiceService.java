@@ -1,5 +1,6 @@
 package com.carlos.invoice.server.service;
 
+import com.carlos.invoice.server.converter.ConverterCollection;
 import com.carlos.invoice.server.dao.InvoiceDao;
 import com.carlos.invoice.server.dto.InvoiceDto;
 import com.carlos.invoice.server.model.Invoice;
@@ -7,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -67,13 +67,6 @@ public class InvoiceService {
             return new ArrayList<>();
         }
 
-        return this.convertInvoiceListToDto(invoiceList);
-    }
-
-    private List<InvoiceDto> convertInvoiceListToDto(List<Invoice> invoiceList) {
-
-        return (List<InvoiceDto>) this.conversionService.convert(invoiceList,
-                TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(Invoice.class)),
-                TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(InvoiceDto.class)));
+        return ConverterCollection.convertList(this.conversionService, invoiceList, InvoiceDto.class);
     }
 }

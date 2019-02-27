@@ -1,5 +1,6 @@
 package com.carlos.invoice.server.service;
 
+import com.carlos.invoice.server.converter.ConverterCollection;
 import com.carlos.invoice.server.dao.ArticleDao;
 import com.carlos.invoice.server.dto.ArticleDto;
 import com.carlos.invoice.server.model.Article;
@@ -14,6 +15,8 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Validated
@@ -52,6 +55,17 @@ public class ArticleService {
         Article article = this.conversionService.convert(articleDto, Article.class);
 
         this.articleDao.save(article);
+    }
+
+    public List<ArticleDto> find() {
+
+        List<Article> articleList = (List)this.articleDao.findAll();
+
+        if (articleList.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return ConverterCollection.convertList(this.conversionService, articleList, ArticleDto.class);
     }
 
     private String createRandomCode() {

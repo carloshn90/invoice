@@ -2,7 +2,6 @@ package com.carlos.invoice.server.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterRegistry;
 
@@ -26,15 +25,7 @@ public abstract class RegisterConverter<S,T> implements Converter<S, T> {
 
     protected <T> List<T> convert(List<? extends Object> collection, Class<T> vClass) {
 
-        return new ArrayList<T>((LinkedHashSet) this.convert(collection, collection.getClass(), vClass));
-    }
-
-    private <T> Object convert(Object collection, Class<?> fromClass, Class<T> toClass) {
-
-        return this.conversionService.convert(collection,
-                TypeDescriptor.collection(Collection.class, TypeDescriptor.valueOf(fromClass)),
-                TypeDescriptor.collection(Collection.class, TypeDescriptor.valueOf(toClass))
-        );
+        return ConverterCollection.convertList(this.conversionService, collection, vClass);
     }
 
     @PostConstruct
