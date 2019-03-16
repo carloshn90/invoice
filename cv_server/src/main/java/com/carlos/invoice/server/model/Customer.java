@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "PERSONAL_DATA")
-public class PersonalData {
+@Table(name = "CUSTOMER")
+public class Customer {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PERSONAL_DATA")
@@ -20,14 +20,14 @@ public class PersonalData {
     private String subName;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "PERSONAL_IDENTIFICATION_ID", referencedColumnName = "id")
-    private PersonalIdentification personalIdentification;
+    @JoinColumn(name = "CUSTOMER_IDENTIFICATION_ID", referencedColumnName = "id")
+    private CustomerIdentification customerIdentification;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            mappedBy = "personalData"
+            mappedBy = "customer"
     )
     private List<Invoice> invoiceList;
 
@@ -55,12 +55,12 @@ public class PersonalData {
         this.subName = subName;
     }
 
-    public PersonalIdentification getPersonalIdentification() {
-        return personalIdentification;
+    public CustomerIdentification getCustomerIdentification() {
+        return customerIdentification;
     }
 
-    public void setPersonalIdentification(PersonalIdentification personalIdentification) {
-        this.personalIdentification = personalIdentification;
+    public void setCustomerIdentification(CustomerIdentification customerIdentification) {
+        this.customerIdentification = customerIdentification;
     }
 
     public void addInvoice(Invoice invoice) {

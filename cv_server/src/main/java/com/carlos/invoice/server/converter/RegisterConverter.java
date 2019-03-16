@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterRegistry;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.List;
 
 public abstract class RegisterConverter<S,T> implements Converter<S, T> {
 

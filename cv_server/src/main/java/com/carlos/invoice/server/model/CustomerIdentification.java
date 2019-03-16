@@ -5,8 +5,8 @@ import com.carlos.invoice.server.enums.DocumentTypeEnum;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PERSONAL_IDENTIFICATION")
-public class PersonalIdentification {
+@Table(name = "CUSTOMER_IDENTIFICATION")
+public class CustomerIdentification {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "SEQ_PERSONAL_IDENTIFICATION")

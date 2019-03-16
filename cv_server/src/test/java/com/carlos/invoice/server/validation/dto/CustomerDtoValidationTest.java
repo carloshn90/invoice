@@ -1,6 +1,6 @@
 package com.carlos.invoice.server.validation.dto;
 
-import com.carlos.invoice.server.dto.PersonalDataDto;
+import com.carlos.invoice.server.dto.CustomerDto;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,9 +14,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
-public class PersonalDataDtoValidationTest {
+public class CustomerDtoValidationTest {
 
     private Validator validator;
     private List<String> validationMessageList;
@@ -27,16 +28,16 @@ public class PersonalDataDtoValidationTest {
         this.validator = validatorFactory.getValidator();
 
         validationMessageList = new ArrayList<>();
-        validationMessageList.add("PersonalDataDto: name is null, empty or blank");
-        validationMessageList.add("PersonalDataDto: subName is null, empty or blank");
-        validationMessageList.add("PersonalDataDto: personalIdentificationDto is null");
+        validationMessageList.add("CustomerDto: name is null, empty or blank");
+        validationMessageList.add("CustomerDto: subName is null, empty or blank");
+        validationMessageList.add("CustomerDto: customerIdentificationDto is null");
     }
 
     @Test
-    public void personalDataDto_CheckValidations() {
-        PersonalDataDto personalDataDto = new PersonalDataDto();
+    public void customerDto_CheckValidations() {
+        CustomerDto customerDto = new CustomerDto();
 
-        Set<ConstraintViolation<PersonalDataDto>> violationSet = this.validator.validate(personalDataDto);
+        Set<ConstraintViolation<CustomerDto>> violationSet = this.validator.validate(customerDto);
 
         assertThat(violationSet, hasSize(this.validationMessageList.size()));
 

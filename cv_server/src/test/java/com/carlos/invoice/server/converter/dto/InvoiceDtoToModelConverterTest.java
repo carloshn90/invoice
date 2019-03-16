@@ -1,11 +1,11 @@
 package com.carlos.invoice.server.converter.dto;
 
+import com.carlos.invoice.server.dto.CustomerDto;
 import com.carlos.invoice.server.dto.InvoiceDto;
 import com.carlos.invoice.server.dto.LineItemDto;
-import com.carlos.invoice.server.dto.PersonalDataDto;
+import com.carlos.invoice.server.model.Customer;
 import com.carlos.invoice.server.model.Invoice;
 import com.carlos.invoice.server.model.LineItem;
-import com.carlos.invoice.server.model.PersonalData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -78,16 +80,16 @@ public class InvoiceDtoToModelConverterTest {
     public void convert_PersonalDataDto_PersonalDataDtoConverterCall1Time() {
 
         InvoiceDto invoiceDtoMock = mock(InvoiceDto.class);
-        PersonalDataDto personalDataDtoMock = mock(PersonalDataDto.class);
-        PersonalData personalDataMock = mock(PersonalData.class);
+        CustomerDto customerDtoMock = mock(CustomerDto.class);
+        Customer customerMock = mock(Customer.class);
 
-        when(invoiceDtoMock.getPersonalDataDto()).thenReturn(personalDataDtoMock);
-        when(this.conversionService.convert(personalDataDtoMock, PersonalData.class)).thenReturn(personalDataMock);
+        when(invoiceDtoMock.getCustomerDto()).thenReturn(customerDtoMock);
+        when(this.conversionService.convert(customerDtoMock, Customer.class)).thenReturn(customerMock);
 
         this.invoiceDtoToModelConverter.convert(invoiceDtoMock);
 
-        verify(this.conversionService, times(1)).convert(personalDataDtoMock, PersonalData.class);
-        verify(personalDataMock, times(1)).addInvoice(any(Invoice.class));
+        verify(this.conversionService, times(1)).convert(customerDtoMock, Customer.class);
+        verify(customerMock, times(1)).addInvoice(any(Invoice.class));
     }
 
     @Test

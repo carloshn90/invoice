@@ -1,11 +1,11 @@
 package com.carlos.invoice.server.converter.model;
 
+import com.carlos.invoice.server.dto.CustomerDto;
 import com.carlos.invoice.server.dto.InvoiceDto;
 import com.carlos.invoice.server.dto.LineItemDto;
-import com.carlos.invoice.server.dto.PersonalDataDto;
+import com.carlos.invoice.server.model.Customer;
 import com.carlos.invoice.server.model.Invoice;
 import com.carlos.invoice.server.model.LineItem;
-import com.carlos.invoice.server.model.PersonalData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +14,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -77,15 +79,15 @@ public class InvoiceToDtoConverterTest {
     public void convert_PersonalData_PersonalDataConverterCall1Time() {
 
         Invoice invoiceMock = mock(Invoice.class);
-        PersonalData personalDataMock = mock(PersonalData.class);
-        PersonalDataDto personalDataDtoMock = mock(PersonalDataDto.class);
+        Customer customerMock = mock(Customer.class);
+        CustomerDto customerDtoMock = mock(CustomerDto.class);
 
-        when(invoiceMock.getPersonalData()).thenReturn(personalDataMock);
-        when(this.conversionService.convert(personalDataMock, PersonalDataDto.class)).thenReturn(personalDataDtoMock);
+        when(invoiceMock.getCustomer()).thenReturn(customerMock);
+        when(this.conversionService.convert(customerMock, CustomerDto.class)).thenReturn(customerDtoMock);
 
         this.invoiceToDtoConverter.convert(invoiceMock);
 
-        verify(this.conversionService, times(1)).convert(personalDataMock, PersonalDataDto.class);
+        verify(this.conversionService, times(1)).convert(customerMock, CustomerDto.class);
     }
 
     @Test

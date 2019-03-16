@@ -15,7 +15,7 @@ public class InvoiceDto implements IUpgradableDto {
 
     @NotNull(message = "InvoiceDto: PersonalDto is null")
     @Valid
-    private PersonalDataDto personalDataDto;
+    private CustomerDto customerDto;
 
     private Date creationDate;
 
@@ -29,12 +29,12 @@ public class InvoiceDto implements IUpgradableDto {
     public InvoiceDto() {
     }
 
-    public PersonalDataDto getPersonalDataDto() {
-        return personalDataDto;
+    public CustomerDto getCustomerDto() {
+        return customerDto;
     }
 
-    public void setPersonalDataDto(PersonalDataDto personalDataDto) {
-        this.personalDataDto = personalDataDto;
+    public void setCustomerDto(CustomerDto customerDto) {
+        this.customerDto = customerDto;
     }
 
     public List<LineItemDto> getLineItemDtoList() {

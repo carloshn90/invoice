@@ -4,19 +4,19 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class PersonalDataDto implements IUpgradableDto {
+public class CustomerDto implements IUpgradableDto {
 
     private Long id;
 
-    @NotBlank(message = "PersonalDataDto: name is null, empty or blank")
+    @NotBlank(message = "CustomerDto: name is null, empty or blank")
     private String name;
 
-    @NotBlank(message = "PersonalDataDto: subName is null, empty or blank")
+    @NotBlank(message = "CustomerDto: subName is null, empty or blank")
     private String subName;
 
-    @NotNull(message = "PersonalDataDto: personalIdentificationDto is null")
+    @NotNull(message = "CustomerDto: customerIdentificationDto is null")
     @Valid
-    private PersonalIdentificationDto personalIdentificationDto;
+    private CustomerIdentificationDto customerIdentificationDto;
 
     public String getName() {
         return name;
@@ -34,12 +34,12 @@ public class PersonalDataDto implements IUpgradableDto {
         this.subName = subName;
     }
 
-    public PersonalIdentificationDto getPersonalIdentificationDto() {
-        return personalIdentificationDto;
+    public CustomerIdentificationDto getCustomerIdentificationDto() {
+        return customerIdentificationDto;
     }
 
-    public void setPersonalIdentificationDto(PersonalIdentificationDto personalIdentificationDto) {
-        this.personalIdentificationDto = personalIdentificationDto;
+    public void setCustomerIdentificationDto(CustomerIdentificationDto customerIdentificationDto) {
+        this.customerIdentificationDto = customerIdentificationDto;
     }
 
     @Override

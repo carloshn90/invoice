@@ -1,9 +1,9 @@
 package com.carlos.invoice.server.converter.model;
 
 import com.carlos.invoice.server.converter.RegisterConverter;
+import com.carlos.invoice.server.dto.CustomerDto;
 import com.carlos.invoice.server.dto.InvoiceDto;
 import com.carlos.invoice.server.dto.LineItemDto;
-import com.carlos.invoice.server.dto.PersonalDataDto;
 import com.carlos.invoice.server.model.Invoice;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
@@ -23,8 +23,8 @@ public class InvoiceToDtoConverter extends RegisterConverter<Invoice, InvoiceDto
         invoiceDto.setCreationDate(invoice.getCreationDate());
         invoiceDto.setTotal(invoice.getTotal());
 
-        if (invoice.getPersonalData() != null) {
-            invoiceDto.setPersonalDataDto(convert(invoice.getPersonalData(), PersonalDataDto.class));
+        if (invoice.getCustomer() != null) {
+            invoiceDto.setCustomerDto(convert(invoice.getCustomer(), CustomerDto.class));
         }
 
         if (invoice.getLineItemList() != null && !invoice.getLineItemList().isEmpty()) {

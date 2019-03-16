@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.validation.ConstraintViolationException;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;

@@ -57,8 +57,8 @@ public class InvoiceControllerIT {
     @Test
     public void create_InvoiceToUpdateJson_Ok() throws Exception {
 
-        String invoiceDtoJson = "{\"personalDataDto\":{\"name\":\"Carlos_U\",\"subName\":" +
-                "\"Hernandez_U\",\"personalIdentificationDto\":{\"documentTypeEnum\":\"DNI\"," +
+        String invoiceDtoJson = "{\"customerDto\":{\"name\":\"Carlos_U\",\"subName\":" +
+                "\"Hernandez_U\",\"customerIdentificationDto\":{\"documentTypeEnum\":\"DNI\"," +
                 "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
                 "\"lineItemDtoList\":[{\"numberOfItem\":2,\"code\":\"123456_U\"," +
                 "\"priceItem\":7.0,\"total\":14.0}],\"total\":14.0}";
@@ -76,8 +76,8 @@ public class InvoiceControllerIT {
     public void update_InvoiceToUpdateJson_Ok() throws Exception {
 
         Long invoiceId = 1L;
-        String invoiceDtoJson = "{\"id\":1,\"personalDataDto\":{\"id\":1,\"name\":\"Carlos\",\"subName\":" +
-                "\"Hernandez\",\"personalIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
+        String invoiceDtoJson = "{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos\",\"subName\":" +
+                "\"Hernandez\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
                 "\"documentNumber\":\"4475896X\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
                 "\"lineItemDtoList\":[{\"id\":1,\"numberOfItem\":1,\"code\":\"123456\"," +
                 "\"priceItem\":14.0,\"total\":14.0}],\"total\":14.0}";
@@ -94,8 +94,8 @@ public class InvoiceControllerIT {
     @Test
     public void find_InvoiceDtoJson() throws Exception {
 
-        String resultExpected = "[{\"id\":1,\"personalDataDto\":{\"id\":1,\"name\":\"Carlos_U\",\"subName\":" +
-                "\"Hernandez_U\",\"personalIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
+        String resultExpected = "[{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos_U\",\"subName\":" +
+                "\"Hernandez_U\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
                 "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
                 "\"lineItemDtoList\":[{\"id\":1,\"numberOfItem\":2,\"code\":\"123456_U\"," +
                 "\"priceItem\":7.0,\"total\":14.0}],\"total\":14.0}]";

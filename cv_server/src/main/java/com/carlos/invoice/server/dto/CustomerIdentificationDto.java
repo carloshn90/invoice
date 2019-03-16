@@ -5,14 +5,14 @@ import com.carlos.invoice.server.enums.DocumentTypeEnum;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class PersonalIdentificationDto implements IUpgradableDto {
+public class CustomerIdentificationDto implements IUpgradableDto {
 
     private Long id;
 
-    @NotNull(message = "PersonalIdentificationDto: documentTypeEnum is null")
+    @NotNull(message = "CustomerIdentificationDto: documentTypeEnum is null")
     private DocumentTypeEnum documentTypeEnum;
 
-    @NotBlank(message = "PersonalIdentificationDto: documentNumber is null, empty or blank")
+    @NotBlank(message = "CustomerIdentificationDto: documentNumber is null, empty or blank")
     private String documentNumber;
 
     public DocumentTypeEnum getDocumentTypeEnum() {

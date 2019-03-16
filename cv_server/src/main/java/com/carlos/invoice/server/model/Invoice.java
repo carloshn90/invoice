@@ -15,8 +15,8 @@ public class Invoice {
 
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "PERSONAL_DATA_ID")
-    private PersonalData personalData;
+    @JoinColumn(name = "CUSTOMER_ID")
+    private Customer customer;
 
     @Column(name = "CREATION_DATE", nullable = false)
     private Date creationDate;
@@ -40,12 +40,12 @@ public class Invoice {
         this.id = id;
     }
 
-    public PersonalData getPersonalData() {
-        return personalData;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setPersonalData(PersonalData personalData) {
-        this.personalData = personalData;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Date getCreationDate() {
