@@ -49,9 +49,9 @@ public class ArticleController extends ExceptionHandlingController {
     }
 
     @GetMapping
-    public List<ArticleDto> find() {
+    public List<ArticleDto> findAll() {
         logger.info(CLASS + ": Find all articles");
 
-        return this.articleService.find();
+        return this.articleService.findAll();
     }
 }

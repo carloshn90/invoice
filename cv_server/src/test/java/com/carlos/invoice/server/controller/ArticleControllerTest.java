@@ -124,12 +124,12 @@ public class ArticleControllerTest {
     }
 
     @Test
-    public void find_NotResult_EmptyBodyOk() throws Exception {
+    public void findAll_NotResult_EmptyBodyOk() throws Exception {
 
         List<ArticleDto> articleDtoList = Collections.emptyList();
         TypeReference<List<ArticleDto>> articleDtoListTypeReference = new TypeReference<List<ArticleDto>>(){};
 
-        when(this.articleService.find()).thenReturn(articleDtoList);
+        when(this.articleService.findAll()).thenReturn(articleDtoList);
 
         MvcResult mvcResult = this.mockMvc
                 .perform(
@@ -146,14 +146,14 @@ public class ArticleControllerTest {
     }
 
     @Test
-    public void find_Result_ResultInBodyOk() throws Exception {
+    public void findAll_Result_ResultInBodyOk() throws Exception {
 
         ArticleDto articleDto = new ArticleDto();
         articleDto.setId(123L);
         List<ArticleDto> articleDtoList = Collections.singletonList(articleDto);
         TypeReference<List<ArticleDto>> articleDtoListTypeReference = new TypeReference<List<ArticleDto>>(){};
 
-        when(this.articleService.find()).thenReturn(articleDtoList);
+        when(this.articleService.findAll()).thenReturn(articleDtoList);
 
         MvcResult mvcResult = this.mockMvc
                 .perform(

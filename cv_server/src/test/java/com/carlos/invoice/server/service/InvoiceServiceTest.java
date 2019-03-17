@@ -92,27 +92,17 @@ public class InvoiceServiceTest {
     }
 
     @Test
-    public void find_DataBaseListNull_EmptyList() {
-
-        when(this.invoiceDao.findAll()).thenReturn(null);
-
-        List<InvoiceDto> invoiceDtoList = this.invoiceService.find();
-
-        assertTrue(invoiceDtoList.isEmpty());
-    }
-
-    @Test
-    public void find_DataBaseListEmpty_EmptyList() {
+    public void findAll_DataBaseListEmpty_EmptyList() {
 
         when(this.invoiceDao.findAll()).thenReturn(Collections.emptyList());
 
-        List<InvoiceDto> invoiceDtoList = this.invoiceService.find();
+        List<InvoiceDto> invoiceDtoList = this.invoiceService.findAll();
 
         assertTrue(invoiceDtoList.isEmpty());
     }
 
     @Test
-    public void find_Correct_ReturnInvoiceDtoList() {
+    public void findAll_Correct_ReturnInvoiceDtoList() {
 
         Invoice invoiceMock = mock(Invoice.class);
         List<Invoice> invoiceListMock = Collections.singletonList(invoiceMock);
@@ -125,7 +115,7 @@ public class InvoiceServiceTest {
         when(this.invoiceDao.findAll()).thenReturn(invoiceListMock);
         when(this.conversionService.convert(invoiceListMock, typeDescriptorFrom, typeDescriptorTo)).thenReturn(invoiceDtoListMock);
 
-        List<InvoiceDto> invoiceDtoResultList = this.invoiceService.find();
+        List<InvoiceDto> invoiceDtoResultList = this.invoiceService.findAll();
 
         assertEquals(invoiceDtoResultList, invoiceDtoListMock);
 

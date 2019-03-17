@@ -86,7 +86,7 @@ public class ArticleControllerIT {
     }
 
     @Test
-    public void find_ArticleDtoJson() throws Exception {
+    public void findAll_ArticleDtoListJson() throws Exception {
 
         String resultExpected = "[{\"id\":1,\"code\":\"1236758ASM\",\"price\":12.36,\"unit\":\"KG\",\"active\":true," +
                 "\"name\":\"Tomatoes\",\"description\":\"Salad Tomatoes\"}]";

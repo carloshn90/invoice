@@ -67,16 +67,6 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void findAll_DataBaseListNull_EmptyList() {
-
-        when(this.customerService.findAll()).thenReturn(null);
-
-        List<CustomerDto> customerDtoList = this.customerService.findAll();
-
-        assertTrue(customerDtoList.isEmpty());
-    }
-
-    @Test
     public void findAll_DataBaseListEmpty_EmptyList() {
 
         when(this.customerDao.findAll()).thenReturn(Collections.emptyList());

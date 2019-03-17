@@ -142,12 +142,12 @@ public class InvoiceControllerTest {
     }
 
     @Test
-    public void find_NotResult_EmptyBodyOk() throws Exception {
+    public void findAll_NotResult_EmptyBodyOk() throws Exception {
 
         List<InvoiceDto> invoiceDtoList = Collections.emptyList();
         TypeReference<List<InvoiceDto>> invoiceDtoListTypeReference = new TypeReference<List<InvoiceDto>>(){};
 
-        when(this.invoiceService.find()).thenReturn(invoiceDtoList);
+        when(this.invoiceService.findAll()).thenReturn(invoiceDtoList);
 
         MvcResult mvcResult = this.mockMvc
                 .perform(
@@ -164,14 +164,14 @@ public class InvoiceControllerTest {
     }
 
     @Test
-    public void find_Result_ResultInBodyOk() throws Exception {
+    public void findAll_Result_ResultInBodyOk() throws Exception {
 
         InvoiceDto invoiceDto = new InvoiceDto();
         invoiceDto.setId(123L);
         List<InvoiceDto> invoiceDtoList = Collections.singletonList(invoiceDto);
         TypeReference<List<InvoiceDto>> invoiceDtoListTypeReference = new TypeReference<List<InvoiceDto>>(){};
 
-        when(this.invoiceService.find()).thenReturn(invoiceDtoList);
+        when(this.invoiceService.findAll()).thenReturn(invoiceDtoList);
 
         MvcResult mvcResult = this.mockMvc
                 .perform(

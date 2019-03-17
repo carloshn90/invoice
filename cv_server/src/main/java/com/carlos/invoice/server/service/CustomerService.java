@@ -53,7 +53,7 @@ public class CustomerService {
 
         List<Customer> customerList = (List<Customer>) this.customerDao.findAll();
 
-        if (customerList == null || customerList.isEmpty()) {
+        if (customerList.isEmpty()) {
             return new ArrayList<>();
         }
 

@@ -58,7 +58,7 @@ public class ArticleService {
         this.articleDao.save(article);
     }
 
-    public List<ArticleDto> find() {
+    public List<ArticleDto> findAll() {
 
         List<Article> articleList = (List)this.articleDao.findAll();
 

@@ -58,13 +58,13 @@ public class InvoiceService {
         this.invoiceDao.save(invoice);
     }
 
-    public List<InvoiceDto> find() {
+    public List<InvoiceDto> findAll() {
 
         logger.info(CLASS + ": findAll invoices");
 
         List<Invoice> invoiceList = (List<Invoice>) this.invoiceDao.findAll();
 
-        if (invoiceList == null || invoiceList.isEmpty()) {
+        if (invoiceList.isEmpty()) {
             return new ArrayList<>();
         }
 

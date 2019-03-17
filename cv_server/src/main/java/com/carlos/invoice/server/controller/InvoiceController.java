@@ -48,9 +48,9 @@ public class InvoiceController extends ExceptionHandlingController {
     }
 
     @GetMapping
-    public List<InvoiceDto> find() {
+    public List<InvoiceDto> findAll() {
         logger.info(CLASS + ": Find all invoices");
 
-        return this.invoiceService.find();
+        return this.invoiceService.findAll();
     }
 }

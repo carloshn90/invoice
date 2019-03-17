@@ -81,17 +81,17 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void find_EmptyDB_ReturnEmptyList() {
+    public void findAll_EmptyDB_ReturnEmptyList() {
 
         when(this.articleDao.findAll()).thenReturn(Collections.emptyList());
 
-        List<ArticleDto> articleDtoList = this.articleService.find();
+        List<ArticleDto> articleDtoList = this.articleService.findAll();
 
         assertTrue(articleDtoList.isEmpty());
     }
 
     @Test
-    public void find_Correct_ReturnArticleDtoList() {
+    public void findAll_Correct_ReturnArticleDtoList() {
 
         Article articleMock = mock(Article.class);
         List<Article> articleListMock = Collections.singletonList(articleMock);
@@ -104,7 +104,7 @@ public class ArticleServiceTest {
         when(this.articleDao.findAll()).thenReturn(articleListMock);
         when(this.conversionService.convert(articleListMock, typeDescriptorFrom, typeDescriptorTo)).thenReturn(articleDtoListMock);
 
-        List<ArticleDto> invoiceDtoResultList = this.articleService.find();
+        List<ArticleDto> invoiceDtoResultList = this.articleService.findAll();
 
         assertEquals(invoiceDtoResultList, articleDtoListMock);
 

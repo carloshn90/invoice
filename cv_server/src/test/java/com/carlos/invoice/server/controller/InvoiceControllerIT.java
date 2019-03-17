@@ -92,7 +92,7 @@ public class InvoiceControllerIT {
     }
 
     @Test
-    public void find_InvoiceDtoListJson() throws Exception {
+    public void findAll_InvoiceDtoListJson() throws Exception {
 
         String resultExpected = "[{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos_U\",\"subName\":" +
                 "\"Hernandez_U\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
