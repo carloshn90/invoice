@@ -60,12 +60,9 @@ public class ArticleServiceTest {
 
         this.articleService.create(articleDtoMock);
 
-        verify(this.conversionService, times(1)).convert(articleDtoMock, Article.class);
-        verify(this.articleDao, times(1)).save(articleMock);
-
         InOrder inOrder = inOrder(this.conversionService, this.articleDao);
-        inOrder.verify(this.conversionService).convert(articleDtoMock, Article.class);
-        inOrder.verify(this.articleDao).save(articleMock);
+        inOrder.verify(this.conversionService, times(1)).convert(articleDtoMock, Article.class);
+        inOrder.verify(this.articleDao, times(1)).save(articleMock);
     }
 
     @Test()
@@ -78,12 +75,9 @@ public class ArticleServiceTest {
 
         this.articleService.update(articleDtoMock);
 
-        verify(this.conversionService, times(1)).convert(articleDtoMock, Article.class);
-        verify(this.articleDao, times(1)).save(articleMock);
-
         InOrder inOrder = inOrder(this.conversionService, this.articleDao);
-        inOrder.verify(this.conversionService).convert(articleDtoMock, Article.class);
-        inOrder.verify(this.articleDao).save(articleMock);
+        inOrder.verify(this.conversionService, times(1)).convert(articleDtoMock, Article.class);
+        inOrder.verify(this.articleDao, times(1)).save(articleMock);
     }
 
     @Test
@@ -114,11 +108,9 @@ public class ArticleServiceTest {
 
         assertEquals(invoiceDtoResultList, articleDtoListMock);
 
-        verify(this.articleDao, times(1)).findAll();
-        verify(this.conversionService, times(1)).convert(articleListMock, typeDescriptorFrom, typeDescriptorTo);
-
         InOrder inOrder = inOrder(this.conversionService, this.articleDao);
-        inOrder.verify(this.articleDao).findAll();
-        inOrder.verify(this.conversionService).convert(articleListMock, typeDescriptorFrom, typeDescriptorTo);
+        inOrder.verify(this.articleDao, times(1)).findAll();
+        inOrder.verify(this.conversionService, times(1))
+                .convert(articleListMock, typeDescriptorFrom, typeDescriptorTo);
     }
 }

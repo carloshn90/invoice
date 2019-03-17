@@ -59,12 +59,9 @@ public class InvoiceServiceTest {
 
         this.invoiceService.create(invoiceDtoMock);
 
-        verify(this.conversionService, times(1)).convert(invoiceDtoMock, Invoice.class);
-        verify(this.invoiceDao, times(1)).save(invoiceMock);
-
         InOrder inOrder = inOrder(this.conversionService, this.invoiceDao);
-        inOrder.verify(this.conversionService).convert(invoiceDtoMock, Invoice.class);
-        inOrder.verify(this.invoiceDao).save(invoiceMock);
+        inOrder.verify(this.conversionService, times(1)).convert(invoiceDtoMock, Invoice.class);
+        inOrder.verify(this.invoiceDao, times(1)).save(invoiceMock);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -89,12 +86,9 @@ public class InvoiceServiceTest {
 
         this.invoiceService.update(invoiceDtoMock);
 
-        verify(this.conversionService, times(1)).convert(invoiceDtoMock, Invoice.class);
-        verify(this.invoiceDao, times(1)).save(invoiceMock);
-
         InOrder inOrder = inOrder(this.conversionService, this.invoiceDao);
-        inOrder.verify(this.conversionService).convert(invoiceDtoMock, Invoice.class);
-        inOrder.verify(this.invoiceDao).save(invoiceMock);
+        inOrder.verify(this.conversionService, times(1)).convert(invoiceDtoMock, Invoice.class);
+        inOrder.verify(this.invoiceDao, times(1)).save(invoiceMock);
     }
 
     @Test
@@ -135,12 +129,9 @@ public class InvoiceServiceTest {
 
         assertEquals(invoiceDtoResultList, invoiceDtoListMock);
 
-        verify(this.invoiceDao, times(1)).findAll();
-        verify(this.conversionService, times(1)).convert(invoiceListMock, typeDescriptorFrom, typeDescriptorTo);
-
         InOrder inOrder = inOrder(this.conversionService, this.invoiceDao);
-        inOrder.verify(this.invoiceDao).findAll();
-        inOrder.verify(this.conversionService).convert(invoiceListMock, typeDescriptorFrom, typeDescriptorTo);
+        inOrder.verify(this.invoiceDao, times(1)).findAll();
+        inOrder.verify(this.conversionService, times(1)).convert(invoiceListMock, typeDescriptorFrom, typeDescriptorTo);
     }
 
 }

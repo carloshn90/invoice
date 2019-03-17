@@ -1,6 +1,6 @@
 package com.carlos.invoice.server.controller;
 
-import com.carlos.invoice.server.dto.InvoiceDto;
+import com.carlos.invoice.server.dto.CustomerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Test;
@@ -24,12 +24,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(secure = false)
 @Transactional
-public class InvoiceControllerIT {
+public class CustomerControllerIT {
 
-    private final static String INVOICES_PATH = "/invoices";
+    private final static String CUSTOMERS_PATH = "/Customers";
 //    It is recommended to use spinal-case (which is highlighted by RFC3986), this case is used by Google,
 //    PayPal and other big companies.
-    private final static String INVOICES_ID_PATH_VARIABLE = "/invoices/{invoice-id}";
+    private final static String CUSTOMER_ID_PATH_VARIABLE = "/Customers/{customer-id}";
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,15 +38,30 @@ public class InvoiceControllerIT {
     private ObjectMapper objectMapper;
 
     @Test
-    public void update_CheckIdValidationError_BadRequest() throws Exception {
-
-        InvoiceDto invoiceDto = new InvoiceDto();
-        String invoiceDtoJson = objectMapper.writeValueAsString(invoiceDto);
-        Long invoiceId = 123L;
+    public void create_CustomerJson_Created() throws Exception {
+        String customerDtoJson = "{\"name\":\"Carlos_U\",\"subName\":" +
+                "\"Hernandez_U\",\"customerIdentificationDto\":{\"documentTypeEnum\":\"DNI\"," +
+                "\"documentNumber\":\"4475896X_U\"}}";
 
         this.mockMvc
                 .perform(
-                        put(INVOICES_ID_PATH_VARIABLE, invoiceId)
+                        post(CUSTOMERS_PATH)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(customerDtoJson)
+                                .accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isCreated());
+    }
+
+    @Test
+    public void update_CheckIdValidationError_BadRequest() throws Exception {
+
+        CustomerDto customerDto = new CustomerDto();
+        String invoiceDtoJson = this.objectMapper.writeValueAsString(customerDto);
+        Long customerId = 123L;
+
+        this.mockMvc
+                .perform(
+                        put(CUSTOMER_ID_PATH_VARIABLE, customerId)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(invoiceDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -55,54 +70,32 @@ public class InvoiceControllerIT {
     }
 
     @Test
-    public void create_InvoiceToUpdateJson_Ok() throws Exception {
+    public void update_CustomerToUpdateJson_Ok() throws Exception {
 
-        String invoiceDtoJson = "{\"customerDto\":{\"name\":\"Carlos_U\",\"subName\":" +
-                "\"Hernandez_U\",\"customerIdentificationDto\":{\"documentTypeEnum\":\"DNI\"," +
-                "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
-                "\"lineItemDtoList\":[{\"numberOfItem\":2,\"code\":\"123456_U\"," +
-                "\"priceItem\":7.0,\"total\":14.0}],\"total\":14.0}";
-
-        this.mockMvc
-                .perform(
-                        post(INVOICES_PATH)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(invoiceDtoJson)
-                                .accept(MediaType.APPLICATION_JSON)
-                ).andExpect(status().isCreated());
-    }
-
-    @Test
-    public void update_InvoiceToUpdateJson_Ok() throws Exception {
-
-        Long invoiceId = 1L;
-        String invoiceDtoJson = "{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos\",\"subName\":" +
+        Long customerId = 1L;
+        String customerDtoJson = "{\"id\":1,\"name\":\"Carlos\",\"subName\":" +
                 "\"Hernandez\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
-                "\"documentNumber\":\"4475896X\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
-                "\"lineItemDtoList\":[{\"id\":1,\"numberOfItem\":1,\"code\":\"123456\"," +
-                "\"priceItem\":14.0,\"total\":14.0}],\"total\":14.0}";
+                "\"documentNumber\":\"4475896X\"}}";
 
         this.mockMvc
                 .perform(
-                        put(INVOICES_ID_PATH_VARIABLE, invoiceId)
+                        put(CUSTOMER_ID_PATH_VARIABLE, customerId)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(invoiceDtoJson)
+                                .content(customerDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk());
     }
 
     @Test
-    public void find_InvoiceDtoListJson() throws Exception {
+    public void findAll_CustomerDtoListJson() throws Exception {
 
-        String resultExpected = "[{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos_U\",\"subName\":" +
+        String resultExpected = "[{\"id\":1,\"name\":\"Carlos_U\",\"subName\":" +
                 "\"Hernandez_U\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
-                "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
-                "\"lineItemDtoList\":[{\"id\":1,\"numberOfItem\":2,\"code\":\"123456_U\"," +
-                "\"priceItem\":7.0,\"total\":14.0}],\"total\":14.0}]";
+                "\"documentNumber\":\"4475896X_U\"}}]";
 
         MvcResult mvcResult = this.mockMvc
                 .perform(
-                        get(INVOICES_PATH)
+                        get(CUSTOMERS_PATH)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )

@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class InvoiceService {
         this.invoiceDao = invoiceDao;
     }
 
-    public void create(@Valid InvoiceDto invoiceDto) {
+    public void create(@Valid @NotNull InvoiceDto invoiceDto) {
 
         logger.info(CLASS + ": create invoice");
 
@@ -44,7 +45,7 @@ public class InvoiceService {
         this.invoiceDao.save(invoice);
     }
 
-    public void update(@Valid InvoiceDto invoiceDto) {
+    public void update(@Valid @NotNull InvoiceDto invoiceDto) {
 
         logger.info(CLASS + ": update invoice: " + invoiceDto.getId());
 

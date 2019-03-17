@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class ArticleService {
         this.articleDao = articleDao;
     }
 
-    public void create(@Valid ArticleDto articleDto) {
+    public void create(@Valid @NotNull ArticleDto articleDto) {
 
         logger.info(CLASS + ": create article");
 
@@ -48,7 +49,7 @@ public class ArticleService {
         this.articleDao.save(article);
     }
 
-    public void update(@Valid @ValidArticleDtoUpdate(message = VALID_ARTICLE_DTO_MESSAGE) ArticleDto articleDto) {
+    public void update(@Valid @NotNull @ValidArticleDtoUpdate(message = VALID_ARTICLE_DTO_MESSAGE) ArticleDto articleDto) {
 
         logger.info(CLASS + ": update article");
 
