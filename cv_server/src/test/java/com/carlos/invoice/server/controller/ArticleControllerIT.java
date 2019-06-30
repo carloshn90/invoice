@@ -1,8 +1,11 @@
 package com.carlos.invoice.server.controller;
 
+import com.carlos.invoice.server.Application.Constants;
 import com.carlos.invoice.server.dto.ArticleDto;
+import com.carlos.invoice.server.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc(secure = false)
+@AutoConfigureMockMvc
 @Transactional
 public class ArticleControllerIT {
 
@@ -35,7 +38,17 @@ public class ArticleControllerIT {
     private MockMvc mockMvc;
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     private ObjectMapper objectMapper;
+
+    private String token;
+
+    @Before
+    public void setUp() {
+        this.token = Constants.JWT.TOKEN_PREFIX + " " + this.jwtService.createValidJwtToken();
+    }
 
     @Test
     public void update_CheckIdValidationError_BadRequest() throws Exception {
@@ -47,6 +60,7 @@ public class ArticleControllerIT {
         this.mockMvc
                 .perform(
                         put(ARTICLE_ID_PATH_VARIABLE, articleId)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(articleDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -63,6 +77,7 @@ public class ArticleControllerIT {
         this.mockMvc
                 .perform(
                         post(ARTICLE_PATH)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(articleDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -79,6 +94,7 @@ public class ArticleControllerIT {
         this.mockMvc
                 .perform(
                         put(ARTICLE_ID_PATH_VARIABLE, articleId)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(articleDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -94,6 +110,7 @@ public class ArticleControllerIT {
         MvcResult mvcResult = this.mockMvc
                 .perform(
                         get(ARTICLE_PATH)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )

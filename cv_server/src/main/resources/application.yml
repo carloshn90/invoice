@@ -15,3 +15,11 @@ spring:
         enable_lazy_load_no_trans: true
     generate-ddl: false
 
+security:
+  jwt:
+    token:
+      header: Authorization
+      prefix: Bearer
+      expirationHours: 10
+      secretKey: Pa9hWJr3zmtSXL7HxH6GEEfQdiOp9Cdu
+

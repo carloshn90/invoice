@@ -1,8 +1,11 @@
 package com.carlos.invoice.server.controller;
 
+import com.carlos.invoice.server.Application.Constants;
 import com.carlos.invoice.server.dto.InvoiceDto;
+import com.carlos.invoice.server.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +38,17 @@ public class InvoiceControllerIT {
     private MockMvc mockMvc;
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     private ObjectMapper objectMapper;
+
+    private String token;
+
+    @Before
+    public void setUp() {
+        this.token = Constants.JWT.TOKEN_PREFIX + " " + this.jwtService.createValidJwtToken();
+    }
 
     @Test
     public void update_CheckIdValidationError_BadRequest() throws Exception {
@@ -47,6 +60,7 @@ public class InvoiceControllerIT {
         this.mockMvc
                 .perform(
                         put(INVOICES_ID_PATH_VARIABLE, invoiceId)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(invoiceDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -66,6 +80,7 @@ public class InvoiceControllerIT {
         this.mockMvc
                 .perform(
                         post(INVOICES_PATH)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(invoiceDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -85,6 +100,7 @@ public class InvoiceControllerIT {
         this.mockMvc
                 .perform(
                         put(INVOICES_ID_PATH_VARIABLE, invoiceId)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(invoiceDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -103,6 +119,7 @@ public class InvoiceControllerIT {
         MvcResult mvcResult = this.mockMvc
                 .perform(
                         get(INVOICES_PATH)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )

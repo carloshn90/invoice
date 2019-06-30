@@ -1,8 +1,11 @@
 package com.carlos.invoice.server.controller;
 
+import com.carlos.invoice.server.Application.Constants;
 import com.carlos.invoice.server.dto.CustomerDto;
+import com.carlos.invoice.server.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc(secure = false)
+@AutoConfigureMockMvc
 @Transactional
 public class CustomerControllerIT {
 
@@ -35,7 +38,17 @@ public class CustomerControllerIT {
     private MockMvc mockMvc;
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     private ObjectMapper objectMapper;
+
+    private String token;
+
+    @Before
+    public void setUp() {
+        this.token = Constants.JWT.TOKEN_PREFIX + " " + this.jwtService.createValidJwtToken();
+    }
 
     @Test
     public void create_CustomerJson_Created() throws Exception {
@@ -46,6 +59,7 @@ public class CustomerControllerIT {
         this.mockMvc
                 .perform(
                         post(CUSTOMERS_PATH)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(customerDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -62,6 +76,7 @@ public class CustomerControllerIT {
         this.mockMvc
                 .perform(
                         put(CUSTOMER_ID_PATH_VARIABLE, customerId)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(invoiceDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -80,6 +95,7 @@ public class CustomerControllerIT {
         this.mockMvc
                 .perform(
                         put(CUSTOMER_ID_PATH_VARIABLE, customerId)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(customerDtoJson)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -96,6 +112,7 @@ public class CustomerControllerIT {
         MvcResult mvcResult = this.mockMvc
                 .perform(
                         get(CUSTOMERS_PATH)
+                                .header(Constants.JWT.TOKEN_HEADER, token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
