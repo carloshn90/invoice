@@ -4,14 +4,13 @@ import com.carlos.invoice.server.converter.ConverterCollection;
 import com.carlos.invoice.server.dao.InvoiceDao;
 import com.carlos.invoice.server.dto.InvoiceDto;
 import com.carlos.invoice.server.model.Invoice;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -20,23 +19,16 @@ import java.util.List;
 
 @Service
 @Validated
-@Transactional
+@Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class InvoiceService {
-    private static final Logger logger = LoggerFactory.getLogger(InvoiceService.class);
-    private static final String CLASS = InvoiceService.class.toString();
 
-    private ConversionService conversionService;
-    private InvoiceDao invoiceDao;
-
-    @Autowired
-    public InvoiceService(ConversionService conversionService, InvoiceDao invoiceDao) {
-        this.conversionService = conversionService;
-        this.invoiceDao = invoiceDao;
-    }
+    private final ConversionService conversionService;
+    private final InvoiceDao invoiceDao;
 
     public void create(@Valid @NotNull InvoiceDto invoiceDto) {
 
-        logger.info(CLASS + ": create invoice");
+        log.info("Create invoice");
 
         Invoice invoice = this.conversionService.convert(invoiceDto, Invoice.class);
 
@@ -47,12 +39,12 @@ public class InvoiceService {
 
     public void update(@Valid @NotNull InvoiceDto invoiceDto) {
 
-        logger.info(CLASS + ": update invoice: " + invoiceDto.getId());
+        log.info("Update invoice: " + invoiceDto.getId());
 
         Invoice invoice = this.conversionService.convert(invoiceDto, Invoice.class);
 
         if (invoice.getCreationDate() == null) {
-            throw new IllegalArgumentException(CLASS + ": CreationDate is null");
+            throw new IllegalArgumentException("CreationDate is null");
         }
 
         this.invoiceDao.save(invoice);
@@ -60,7 +52,7 @@ public class InvoiceService {
 
     public List<InvoiceDto> findAll() {
 
-        logger.info(CLASS + ": findAll invoices");
+        log.info("FindAll invoices");
 
         List<Invoice> invoiceList = (List<Invoice>) this.invoiceDao.findAll();
 

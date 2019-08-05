@@ -3,20 +3,17 @@ package com.carlos.invoice.server.validation;
 import com.carlos.invoice.server.dao.ArticleDao;
 import com.carlos.invoice.server.dto.ArticleDto;
 import com.carlos.invoice.server.model.Article;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Optional;
 
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ValidArticleDtoUpdateValidator implements ConstraintValidator<ValidArticleDtoUpdate, ArticleDto> {
 
-   private ArticleDao articleDao;
-
-   @Autowired
-   public ValidArticleDtoUpdateValidator(ArticleDao articleDao) {
-      this.articleDao = articleDao;
-   }
+   private final ArticleDao articleDao;
 
    public void initialize(ValidArticleDtoUpdate constraint) {
    }

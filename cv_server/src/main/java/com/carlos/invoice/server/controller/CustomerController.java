@@ -4,8 +4,8 @@ import com.carlos.invoice.server.dto.CustomerDto;
 import com.carlos.invoice.server.exception.ExceptionHandlingController;
 import com.carlos.invoice.server.service.CustomerService;
 import com.carlos.invoice.server.validation.ValidIdExistInDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +16,16 @@ import java.util.List;
 
 @Validated
 @RestController
+@Slf4j
 @RequestMapping("/Customers")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomerController extends ExceptionHandlingController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
-    private static final String CLASS = InvoiceController.class.toString();
-
-    private CustomerService customerService;
-
-    @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+    private final CustomerService customerService;
 
     @PostMapping
     public ResponseEntity create(@RequestBody CustomerDto customerDto) {
-        logger.info(CLASS + ": Create customer");
+        log.info("Create customer");
 
         this.customerService.create(customerDto);
 
@@ -41,7 +35,7 @@ public class CustomerController extends ExceptionHandlingController {
     @PutMapping(value = "/{customer-id}")
     @ValidIdExistInDto(message = "CustomerController: customer-id is not present in the customerId")
     public ResponseEntity update(@PathVariable("customer-id") Long customerId, @RequestBody CustomerDto customerDto) {
-        logger.info(CLASS + ": Update customer " + customerId);
+        log.info("Update customer " + customerId);
 
         this.customerService.update(customerDto);
 
@@ -50,7 +44,7 @@ public class CustomerController extends ExceptionHandlingController {
 
     @GetMapping
     public List<CustomerDto> findAll() {
-        logger.info(CLASS + ": Find all customer");
+        log.info("Find all customer");
 
         return this.customerService.findAll();
     }

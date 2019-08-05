@@ -4,14 +4,13 @@ import com.carlos.invoice.server.converter.ConverterCollection;
 import com.carlos.invoice.server.dao.CustomerDao;
 import com.carlos.invoice.server.dto.CustomerDto;
 import com.carlos.invoice.server.model.Customer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -19,37 +18,30 @@ import java.util.List;
 
 @Service
 @Validated
-@Transactional
+@Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomerService {
-    private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
-    private static final String CLASS = CustomerService.class.toString();
 
-    private ConversionService conversionService;
-    private CustomerDao customerDao;
-
-    @Autowired
-    public CustomerService(ConversionService conversionService, CustomerDao customerDao) {
-        this.conversionService = conversionService;
-        this.customerDao = customerDao;
-    }
+    private final ConversionService conversionService;
+    private final CustomerDao customerDao;
 
     public void create(@Valid @NotNull CustomerDto customerDto) {
 
-        logger.info(CLASS + ": create customer");
+        log.info("Create customer");
 
         this.save(customerDto);
     }
 
     public void update(@Valid @NotNull CustomerDto customerDto) {
 
-        logger.info(CLASS + ": update customer");
+        log.info("Update customer");
 
         this.save(customerDto);
     }
 
     public List<CustomerDto> findAll() {
 
-        logger.info(CLASS + ": find all customer");
+        log.info("Find all customer");
 
         List<Customer> customerList = (List<Customer>) this.customerDao.findAll();
 

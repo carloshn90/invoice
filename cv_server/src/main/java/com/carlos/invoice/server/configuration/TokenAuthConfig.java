@@ -2,6 +2,7 @@ package com.carlos.invoice.server.configuration;
 
 import com.carlos.invoice.server.security.JwtAuthFilter;
 import com.carlos.invoice.server.security.JwtAuthenticationProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,16 +14,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TokenAuthConfig extends WebSecurityConfigurerAdapter {
 
-    private JwtAuthFilter jwtAuthFilter;
-    private JwtAuthenticationProvider jwtAuthenticationProvider;
-
-    @Autowired
-    public TokenAuthConfig(JwtAuthFilter jwtAuthFilter, JwtAuthenticationProvider jwtAuthenticationProvider) {
-        this.jwtAuthFilter = jwtAuthFilter;
-        this.jwtAuthenticationProvider = jwtAuthenticationProvider;
-    }
+    private final JwtAuthFilter jwtAuthFilter;
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {

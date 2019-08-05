@@ -2,8 +2,7 @@ package com.carlos.invoice.server.security;
 
 import com.carlos.invoice.server.exception.TokenAuthenticationException;
 import com.carlos.invoice.server.service.JwtService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -12,9 +11,8 @@ import org.springframework.stereotype.Component;
 
 
 @Component
+@Slf4j
 public class JwtAuthenticationProvider implements AuthenticationProvider {
-
-    private Logger logger = LoggerFactory.getLogger(JwtAuthenticationProvider.class);
 
     private JwtService jwtService;
 
@@ -26,8 +24,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        logger.debug(authentication.toString());
-        logger.debug("Credentials: " + authentication.getCredentials());
+        log.debug(authentication.toString());
+        log.debug("Credentials: " + authentication.getCredentials());
 
         if (authentication.getCredentials() == null) {
             throw new TokenAuthenticationException("Failed to verify token");

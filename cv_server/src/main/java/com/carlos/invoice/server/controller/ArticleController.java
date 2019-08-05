@@ -4,8 +4,8 @@ import com.carlos.invoice.server.dto.ArticleDto;
 import com.carlos.invoice.server.exception.ExceptionHandlingController;
 import com.carlos.invoice.server.service.ArticleService;
 import com.carlos.invoice.server.validation.ValidIdExistInDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +16,16 @@ import java.util.List;
 
 @Validated
 @RestController
+@Slf4j
 @RequestMapping("/articles")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ArticleController extends ExceptionHandlingController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
-    private static final String CLASS = InvoiceController.class.toString();
-
-    private ArticleService articleService;
-
-    @Autowired
-    public ArticleController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
+    private final ArticleService articleService;
 
     @PostMapping
     public ResponseEntity create(@RequestBody ArticleDto articleDto) {
-        logger.info(CLASS + ": Create article");
+        log.info("Create article");
 
         this.articleService.create(articleDto);
 
@@ -41,7 +35,7 @@ public class ArticleController extends ExceptionHandlingController {
     @PutMapping(value = "/{article-id}")
     @ValidIdExistInDto(message = "ArticleController: article-id is not present in the articleDto")
     public ResponseEntity update(@PathVariable("article-id") Long articleId, @RequestBody ArticleDto articleDto) {
-        logger.info(CLASS + ": Update article " + articleId);
+        log.info("Update article " + articleId);
 
         this.articleService.update(articleDto);
 
@@ -50,7 +44,7 @@ public class ArticleController extends ExceptionHandlingController {
 
     @GetMapping
     public List<ArticleDto> findAll() {
-        logger.info(CLASS + ": Find all articles");
+        log.info("Find all articles");
 
         return this.articleService.findAll();
     }
