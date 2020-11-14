@@ -1,0 +1,17 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+
+    tools {
+        jdk 'Java JDK 8u261'
+        maven 'maven 3.6.3'
+    }
+
+    stages {
+        stage('Build') {
+           dir('cv_server') {
+               sh "mvn -B clean package"
+           }
+        }
+    }
+}
