@@ -9,9 +9,11 @@ pipeline {
 
     stages {
         stage('Build') {
-           dir('cv_server') {
-               sh "mvn -B clean package"
-           }
+            steps {
+                dir('cv_server') {
+                    sh "mvn -B clean package"
+                }
+            }
         }
     }
 }
