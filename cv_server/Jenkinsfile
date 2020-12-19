@@ -14,6 +14,14 @@ pipeline {
         maven 'maven 3.6.3'
     }
 
+    environment {
+        steps {
+            dir('cv_server') {
+                IS_SNAPSHOT = readMavenPom().getVersion().endsWith("-SNAPSHOT")
+            }
+        }
+    }
+
     stages {
         stage('Build') {
             steps {
