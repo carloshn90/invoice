@@ -15,8 +15,6 @@ pipeline {
     }
 
     environment {
-        def pom = readMavenPom file: 'cv_server/pom.xml'
-        IS_SNAPSHOT = pom.getVersion().endsWith("-SNAPSHOT")
     }
 
     stages {
