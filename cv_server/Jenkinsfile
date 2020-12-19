@@ -15,6 +15,7 @@ pipeline {
     }
 
     environment {
+        IS_SNAPSHOT = 'TRUE'
     }
 
     stages {
