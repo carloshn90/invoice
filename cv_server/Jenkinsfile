@@ -14,12 +14,8 @@ pipeline {
         maven 'maven 3.6.3'
     }
 
-    node {
-        def pom = readMavenPom file: 'cv_server/pom.xml'
-    }
-
     environment {
-        IS_SNAPSHOT = pom().getVersion().endsWith("-SNAPSHOT")
+        IS_SNAPSHOT = readMavenPom(file: 'cv_server/pom.xml').getVersion().endsWith("-SNAPSHOT")
     }
 
     stages {
