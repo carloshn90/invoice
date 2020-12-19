@@ -15,7 +15,7 @@ pipeline {
     }
 
     environment {
-        steps {
+        step {
             dir('cv_server') {
                 IS_SNAPSHOT = readMavenPom().getVersion().endsWith("-SNAPSHOT")
             }
