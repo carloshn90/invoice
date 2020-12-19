@@ -14,7 +14,9 @@ pipeline {
         maven 'maven 3.6.3'
     }
 
-    def pom = readMavenPom file: 'cv_server/pom.xml'
+    node {
+        def pom = readMavenPom file: 'cv_server/pom.xml'
+    }
 
     environment {
         IS_SNAPSHOT = pom().getVersion().endsWith("-SNAPSHOT")
