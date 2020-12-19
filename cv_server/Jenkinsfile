@@ -15,26 +15,20 @@ pipeline {
     }
 
     environment {
-        step {
-            dir('cv_server') {
-                IS_SNAPSHOT = readMavenPom().getVersion().endsWith("-SNAPSHOT")
-            }
-        }
+        IS_SNAPSHOT = readMavenPom().getVersion().endsWith("-SNAPSHOT")
     }
 
     stages {
         stage('Build') {
             steps {
-                dir('cv_server') {
-                    sh "mvn -B -U clean package"
-                }
+                sh "mvn -B -U clean package"
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'cv_server/target/*.jar', fingerprint: true
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             deleteDir()
         }
     }
