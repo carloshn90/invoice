@@ -41,9 +41,10 @@ pipeline {
         stage('Deploy in ECS') {
             steps {
                 dir('cv_server') {
-                    script {
-                        sh("eval \$(aws ecr get-login --no-include-email | sed 's|https://||')")
-                        docker.withRegistry('http://480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile', 'ecr:eu-west-1:personal-aws-ecr') {
+                    withAWS(region: 'eu-west-1', credentials: 'personal-aws-ecr') {
+                        script {
+                            def login = ecrLogin()
+                            sh "${login}"
                             docker.image('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest').push()
                         }
                     }
