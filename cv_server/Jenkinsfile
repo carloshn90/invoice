@@ -34,8 +34,11 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 dir('cv_server') {
+                    VERSION = readMavenPom().getVersion()
+                    NAME = readMavenPom().getName()
+                    JAR_NAME = "${NAME}-${VERSION}.jar"
                     script {
-                        docker.build("${AWS_ECR_URL}/tile:latest", '--build-arg JAR_FILE=cv_server-0.0.1-SNAPSHOT.jar .')
+                        docker.build("${AWS_ECR_URL}/tile:latest", "--build-arg JAR_FILE=${JAR_NAME} .")
                     }
                 }
             }
@@ -63,6 +66,7 @@ pipeline {
             jacoco(execPattern: 'cv_server/target/jacoco-ut.exec')
 //            archiveArtifacts artifacts: 'cv_server/target/*.jar', fingerprint: true
             deleteDir()
+            docker.image("${AWS_ECR_URL}/tile:latest").delete()
         }
     }
 }
