@@ -17,7 +17,6 @@ pipeline {
     tools {
         jdk 'Java JDK 8u221'
         maven 'maven 3.6.3'
-        docker 'docker-latest'
     }
 
     environment {
