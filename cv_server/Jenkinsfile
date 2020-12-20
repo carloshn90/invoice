@@ -71,7 +71,7 @@ pipeline {
 }
 
 def getJarName() {
-    def pom = readMavenPom file: './cv_server/pom.xml'
+    def pom = readMavenPom file: 'cv_server/pom.xml'
     def version = pom.version
     def name = pom.name
     def jarName = name + '-' + version + '.jar'
