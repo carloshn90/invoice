@@ -2,6 +2,7 @@
 pipeline {
     agent {
         node {
+            label 'cv-server'
             customerWorkspace 'cv_server'
         }
     }
