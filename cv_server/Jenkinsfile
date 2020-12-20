@@ -44,8 +44,8 @@ pipeline {
                     withAWS(region: 'eu-west-1', credentials: 'personal-aws-ecr') {
                         script {
                             def login = ecrLogin()
-                            sh "${login}"
-//                            docker.image('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest').push()
+//                            sh "${login}"
+                            docker.image('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest').push()
                         }
                     }
                 }
