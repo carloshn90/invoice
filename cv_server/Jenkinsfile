@@ -43,7 +43,7 @@ pipeline {
                 dir('cv_server') {
                     script {
                         docker.withRegistry('https://480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile', 'ecr:eu-west-1:personal-aws-ecr') {
-                            docker.image('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile').push('latest')
+                            docker.image('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest').push()
                         }
                     }
                 }
