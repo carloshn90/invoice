@@ -34,11 +34,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 dir('cv_server') {
-                    VERSION = readMavenPom().getVersion()
-                    NAME = readMavenPom().getName()
-                    JAR_NAME = "${NAME}-${VERSION}.jar"
                     script {
-                        docker.build("${AWS_ECR_URL}/tile:latest", "--build-arg JAR_FILE=${JAR_NAME} .")
+                        docker.build("${AWS_ECR_URL}/tile:latest", "--build-arg JAR_FILE=${getJarName()} .")
                     }
                 }
             }
@@ -69,4 +66,13 @@ pipeline {
             docker.image("${AWS_ECR_URL}/tile:latest").delete()
         }
     }
+}
+
+def getJarName() {
+    def pom = readMavenPom file: './cv_server/pom.xml'
+    def version = pom.version
+    def name = pom.name
+    def jarName = name + '-' + version + '.jar'
+    echo "jarName: ${jarName}"
+    return  jarName
 }
