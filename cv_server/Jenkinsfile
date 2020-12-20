@@ -16,8 +16,8 @@ pipeline {
 
     stages {
         stage('Build') {
-            dir('cv_server') {
-                steps {
+            steps {
+                dir('cv_server') {
                     sh "mvn -B -U clean package"
                 }
             }
