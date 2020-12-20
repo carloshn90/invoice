@@ -15,6 +15,11 @@ pipeline {
         dockerTool 'docker-latest'
     }
 
+    environment {
+        AWS_ECR_REGION = 'eu-west-1'
+        AWS_ECR_URL = '480184259951.dkr.ecr.eu-west-1.amazonaws.com'
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -30,10 +35,8 @@ pipeline {
             steps {
                 dir('cv_server') {
                     script {
-                        docker.build('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest', '--build-arg JAR_FILE=cv_server-0.0.1-SNAPSHOT.jar .')
+                        docker.build("${AWS_ECR_URL}/tile:latest", '--build-arg JAR_FILE=cv_server-0.0.1-SNAPSHOT.jar .')
                     }
-//                    sh "docker build --build-arg JAR_FILE=cv_server-0.0.1-SNAPSHOT.jar -t cv-server:latest ."
-//                    sh "docker tag cv-server:latest 480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest"
                 }
             }
         }
@@ -41,11 +44,11 @@ pipeline {
         stage('Deploy in ECS') {
             steps {
                 dir('cv_server') {
-                    withAWS(region: 'eu-west-1', credentials: 'personal-aws-ecr') {
+                    withAWS(region: "${AWS_ECR_REGION}", credentials: 'personal-aws-ecr') {
                         script {
                             def login = ecrLogin()
                             sh "${login}"
-                            docker.image('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest').push()
+                            docker.image("${AWS_ECR_URL}/tile:latest").push()
                         }
                     }
                 }
