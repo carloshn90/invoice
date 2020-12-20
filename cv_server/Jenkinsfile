@@ -12,7 +12,6 @@ pipeline {
     tools {
         jdk 'Java JDK 8u221'
         maven 'maven 3.6.3'
-        docker 'docker-latest'
     }
 
     stages {
@@ -26,11 +25,13 @@ pipeline {
             }
         }
 
-//        stage('Build Docker Image') {
-//            steps {
-//                sh "docker build --build-arg JAR_FILE=cv_server-0.0.1-SNAPSHOT.jar ."
-//            }
-//        }
+        stage('Build Docker Image') {
+            steps {
+                dir('cv_server') {
+                    docker.build("cv-server:latest", "--build-arg JAR_FILE=cv_server-0.0.1-SNAPSHOT.jar")
+                }
+            }
+        }
     }
 
     post {
