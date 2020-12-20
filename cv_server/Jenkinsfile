@@ -1,11 +1,6 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent {
-        node {
-            label 'cv-server'
-            customWorkspace 'cv_server'
-        }
-    }
+    agent any
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
@@ -19,14 +14,12 @@ pipeline {
         maven 'maven 3.6.3'
     }
 
-    environment {
-        IS_SNAPSHOT = 'TRUE'
-    }
-
     stages {
         stage('Build') {
-            steps {
-                sh "mvn -B -U clean package"
+            dir('cv_server') {
+                steps {
+                    sh "mvn -B -U clean package"
+                }
             }
         }
 
@@ -39,7 +32,10 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            junit allowEmptyResults: true, testResult: 'cv_server/target/surfire-reports/*.xml'
+            publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, resporDir: 'cv_server/target/site/jacoco-ut/', reportFiles: 'index.html', reportName: 'Unit Testing Coverage', reportTitles: 'Unit Testing Coverage'])
+            jacoco(execPattern: 'cv_server/target/jacoco-ut.exec')
+            archiveArtifacts artifacts: 'cv_server/target/*.jar', fingerprint: true
             deleteDir()
         }
     }
