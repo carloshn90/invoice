@@ -37,9 +37,11 @@ pipeline {
         stage('Deploy in ECS') {
             steps {
                 dir('cv_server') {
-                    docker.withRegistry('https://480184259951.dkr.ecr.eu-west-1.amazonaws.com', 'ecr:eu-west-1:personal-aws-ecr') {
-                        sh "docker tag cv-server:latest 480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest"
-                        docker.image('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile').push('latest')
+                    script {
+                        docker.withRegistry('https://480184259951.dkr.ecr.eu-west-1.amazonaws.com', 'ecr:eu-west-1:personal-aws-ecr') {
+                            sh "docker tag cv-server:latest 480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile:latest"
+                            docker.image('480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile').push('latest')
+                        }
                     }
                 }
             }
