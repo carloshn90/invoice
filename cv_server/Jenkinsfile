@@ -33,7 +33,7 @@ pipeline {
     post {
         always {
             junit allowEmptyResults: true, testResults: 'cv_server/target/surfire-reports/*.xml'
-            publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reporDir: 'cv_server/target/site/jacoco-ut/', reportFiles: 'index.html', reportName: 'Unit Testing Coverage', reportTitles: 'Unit Testing Coverage'])
+            publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'cv_server/target/site/jacoco-ut/', reportFiles: 'index.html', reportName: 'Unit Testing Coverage', reportTitles: 'Unit Testing Coverage'])
             jacoco(execPattern: 'cv_server/target/jacoco-ut.exec')
             archiveArtifacts artifacts: 'cv_server/target/*.jar', fingerprint: true
             deleteDir()
