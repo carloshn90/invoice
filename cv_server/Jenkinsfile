@@ -1,6 +1,10 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent any
+    agent {
+        node {
+            customerWorkspace 'cv_server'
+        }
+    }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
@@ -12,6 +16,7 @@ pipeline {
     tools {
         jdk 'Java JDK 8u221'
         maven 'maven 3.6.3'
+        docker 'docker-latest'
     }
 
     environment {
@@ -21,16 +26,20 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dir('cv_server') {
-                    sh "mvn -B -U clean package"
-                }
+                sh "mvn -B -U clean package"
             }
         }
+
+//        stage('Build Docker Image') {
+//            steps {
+//                sh "docker build --build-arg JAR_FILE=cv_server-0.0.1-SNAPSHOT.jar ."
+//            }
+//        }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'cv_server/target/*.jar', fingerprint: true
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             deleteDir()
         }
     }

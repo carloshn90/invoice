@@ -1,0 +1,5 @@
+FROM openjdk:13-alpine
+ARG JAR_FILE
+COPY target/${JAR_FILE} app.jar
+RUN mkdir -p /site/wwwroot/temp/
+ENTRYPOINT ["java","-jar","/app.jar"]
