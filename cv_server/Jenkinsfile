@@ -16,6 +16,8 @@ pipeline {
     }
 
     environment {
+        POM_VERSION = getVersion()
+        JAR_NAME = getJarName()
         AWS_ECR_REGION = 'eu-west-1'
         AWS_ECR_URL = '480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile'
     }
@@ -35,7 +37,7 @@ pipeline {
             steps {
                 dir('cv_server') {
                     script {
-                        docker.build("${AWS_ECR_URL}:${getVersion()}", "--build-arg JAR_FILE=${getJarName()} .")
+                        docker.build("${AWS_ECR_URL}:${POM_VERSION}", "--build-arg JAR_FILE=${JAR_NAME} .")
                     }
                 }
             }
@@ -48,7 +50,7 @@ pipeline {
                         script {
                             def login = ecrLogin()
                             sh('#!/bin/sh -e\n' + "${login}") // hide logging
-                            docker.image("${AWS_ECR_URL}:${getVersion()}").push()
+                            docker.image("${AWS_ECR_URL}:${POM_VERSION}").push()
                         }
                     }
                 }
@@ -62,7 +64,7 @@ pipeline {
             publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'cv_server/target/site/jacoco-ut/', reportFiles: 'index.html', reportName: 'Unit Testing Coverage', reportTitles: 'Unit Testing Coverage'])
             jacoco(execPattern: 'cv_server/target/jacoco-ut.exec')
             deleteDir()
-            sh "docker rmi ${AWS_ECR_URL}:${getVersion()}"
+            sh "docker rmi ${AWS_ECR_URL}:${POM_VERSION}"
         }
     }
 }
@@ -74,11 +76,11 @@ def getJarName() {
 }
 
 def getVersion() {
-    def pom = readMavenPom file: './pom.xml'
+    def pom = readMavenPom file: './cv_server/pom.xml'
     return pom.version
 }
 
 def getName() {
-    def pom = readMavenPom file: './pom.xml'
+    def pom = readMavenPom file: './cv_server/pom.xml'
     return pom.name
 }
