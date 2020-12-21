@@ -47,7 +47,9 @@ pipeline {
                     withAWS(region: "${AWS_ECR_REGION}", credentials: 'personal-aws-ecr') {
                         script {
                             def login = ecrLogin()
-                            sh "set +x ${login} set -x"
+                            sh 'set +x'
+                            sh "${login}"
+                            sh 'set -x'
                             docker.image("${AWS_ECR_URL}/tile:latest").push()
                         }
                     }
