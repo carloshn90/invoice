@@ -35,7 +35,7 @@ pipeline {
             steps {
                 dir('cv_server') {
                     script {
-                        docker.build("${AWS_ECR_URL}/tile:latest", "--build-arg JAR_FILE=${getJarName()} .")
+                        docker.build("${AWS_ECR_URL}/tile:${getVersion()}", "--build-arg JAR_FILE=${getJarName()} .")
                     }
                 }
             }
@@ -47,8 +47,8 @@ pipeline {
                     withAWS(region: "${AWS_ECR_REGION}", credentials: 'personal-aws-ecr') {
                         script {
                             def login = ecrLogin()
-                            sh('#!/bin/sh -e\n' + "${login}")
-                            docker.image("${AWS_ECR_URL}/tile:latest").push()
+                            sh('#!/bin/sh -e\n' + "${login}") // hide logging
+                            docker.image("${AWS_ECR_URL}/tile:${getVersion()}").push()
                         }
                     }
                 }
@@ -62,16 +62,23 @@ pipeline {
             publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'cv_server/target/site/jacoco-ut/', reportFiles: 'index.html', reportName: 'Unit Testing Coverage', reportTitles: 'Unit Testing Coverage'])
             jacoco(execPattern: 'cv_server/target/jacoco-ut.exec')
             deleteDir()
-            sh "docker rmi ${AWS_ECR_URL}/tile:latest"
+            sh "docker rmi ${AWS_ECR_URL}/tile:${getVersion()}"
         }
     }
 }
 
 def getJarName() {
-    def pom = readMavenPom file: './pom.xml'
-    def version = pom.version
-    def name = pom.name
-    def jarName = name + '-' + version + '.jar'
+    def jarName = getName() + '-' + getVersion() + '.jar'
     echo "jarName: ${jarName}"
     return  jarName
+}
+
+def getVersion() {
+    def pom = readMavenPom file: './pom.xml'
+    return pom.version
+}
+
+def getName() {
+    def pom = readMavenPom file: './pom.xml'
+    return pom.name
 }
