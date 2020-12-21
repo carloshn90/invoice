@@ -17,7 +17,7 @@ pipeline {
 
     environment {
         AWS_ECR_REGION = 'eu-west-1'
-        AWS_ECR_URL = '480184259951.dkr.ecr.eu-west-1.amazonaws.com'
+        AWS_ECR_URL = '480184259951.dkr.ecr.eu-west-1.amazonaws.com/tile'
     }
 
     stages {
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 dir('cv_server') {
                     script {
-                        docker.build("${AWS_ECR_URL}/tile:${getVersion()}", "--build-arg JAR_FILE=${getJarName()} .")
+                        docker.build("${AWS_ECR_URL}:${getVersion()}", "--build-arg JAR_FILE=${getJarName()} .")
                     }
                 }
             }
@@ -48,7 +48,7 @@ pipeline {
                         script {
                             def login = ecrLogin()
                             sh('#!/bin/sh -e\n' + "${login}") // hide logging
-                            docker.image("${AWS_ECR_URL}/tile:${getVersion()}").push()
+                            docker.image("${AWS_ECR_URL}:${getVersion()}").push()
                         }
                     }
                 }
@@ -62,7 +62,7 @@ pipeline {
             publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'cv_server/target/site/jacoco-ut/', reportFiles: 'index.html', reportName: 'Unit Testing Coverage', reportTitles: 'Unit Testing Coverage'])
             jacoco(execPattern: 'cv_server/target/jacoco-ut.exec')
             deleteDir()
-            sh "docker rmi ${AWS_ECR_URL}/tile:${getVersion()}"
+            sh "docker rmi ${AWS_ECR_URL}:${getVersion()}"
         }
     }
 }
