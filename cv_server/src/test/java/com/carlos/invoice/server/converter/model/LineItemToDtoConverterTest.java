@@ -40,7 +40,7 @@ public class LineItemToDtoConverterTest {
 
         LineItemDto lineItemDto = this.lineItemToDtoConverter.convert(lineItemMock);
 
-        assertEquals(lineItemDto.getId(), lineItemMock.getId());
+        assertEquals(lineItemMock.getId(), lineItemDto.getId());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class LineItemToDtoConverterTest {
 
         LineItemDto lineItemDto = this.lineItemToDtoConverter.convert(lineItemMock);
 
-        assertEquals(lineItemDto.getNumberOfItem(), lineItemMock.getNumberOfItem());
+        assertEquals(lineItemMock.getNumberOfItem(), lineItemDto.getNumberOfItem());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class LineItemToDtoConverterTest {
 
         LineItemDto lineItemDto = this.lineItemToDtoConverter.convert(lineItemMock);
 
-        assertEquals(lineItemDto.getCode(), lineItemMock.getCode());
+        assertEquals(lineItemMock.getCode(), lineItemDto.getCode());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class LineItemToDtoConverterTest {
 
         LineItemDto lineItemDto = this.lineItemToDtoConverter.convert(lineItemMock);
 
-        assertEquals(lineItemDto.getPriceItem(), lineItemMock.getPriceItem());
+        assertEquals(lineItemMock.getPriceItem(), lineItemDto.getPriceItem());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class LineItemToDtoConverterTest {
 
         LineItemDto lineItemDto = this.lineItemToDtoConverter.convert(lineItemMock);
 
-        assertEquals(lineItemDto.getTotal(), lineItemMock.getTotal());
+        assertEquals(lineItemMock.getTotal(), lineItemDto.getTotal());
     }
 
 }

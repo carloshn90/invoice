@@ -117,7 +117,7 @@ public class InvoiceServiceTest {
 
         List<InvoiceDto> invoiceDtoResultList = this.invoiceService.findAll();
 
-        assertEquals(invoiceDtoResultList, invoiceDtoListMock);
+        assertEquals(invoiceDtoListMock, invoiceDtoResultList);
 
         InOrder inOrder = inOrder(this.conversionService, this.invoiceDao);
         inOrder.verify(this.invoiceDao, times(1)).findAll();

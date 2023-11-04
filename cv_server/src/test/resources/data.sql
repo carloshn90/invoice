@@ -8,7 +8,7 @@ INSERT INTO CUSTOMER_IDENTIFICATION (ID, DOCUMENT_NUMBER, DOCUMENT_TYPE) VALUES 
 --------------------CUSTOMER-------------------
 -----------------------------------------------
 
-INSERT INTO CUSTOMER (ID, name, SUB_NAME, CUSTOMER_IDENTIFICATION_ID) VALUES (1, 'Carlos_U', 'Hernandez_U', 1);
+INSERT INTO CUSTOMER (ID, name, SURNAME, CUSTOMER_IDENTIFICATION_ID) VALUES (1, 'Carlos_U', 'Hernandez_U', 1);
 
 -----------------------------------------------
 ---------------------INVOICE-------------------

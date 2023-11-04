@@ -20,7 +20,7 @@ public class CustomerDataToDtoConverter extends RegisterConverter<Customer, Cust
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(customer.getId());
         customerDto.setName(customer.getName());
-        customerDto.setSubName(customer.getSubName());
+        customerDto.setSurname(customer.getSurname());
 
         if (customer.getCustomerIdentification() != null) {
             customerDto.setCustomerIdentificationDto(

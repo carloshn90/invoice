@@ -19,7 +19,7 @@ public class CustomerToDtoConverterTest {
 
     private final static Long ID = 569874L;
     private final static String NAME = "testName";
-    private final static String SUB_NAME = "testSubName";
+    private final static String SURNAME = "testSurname";
 
     @Mock
     private GenericConversionService conversionService;
@@ -40,7 +40,7 @@ public class CustomerToDtoConverterTest {
 
         CustomerDto customerDto = this.customerDataToDtoConverter.convert(customerMock);
 
-        assertEquals(customerDto.getId(), customerMock.getId());
+        assertEquals(customerMock.getId(), customerDto.getId());
     }
 
     @Test
@@ -52,19 +52,19 @@ public class CustomerToDtoConverterTest {
 
         CustomerDto customerDto = this.customerDataToDtoConverter.convert(customerMock);
 
-        assertEquals(customerDto.getName(), customerMock.getName());
+        assertEquals(customerMock.getName(), customerDto.getName());
     }
 
     @Test
-    public void convert_SubName_DtoWithSubName() {
+    public void convert_Surname_DtoWithSurname() {
 
         Customer customerMock = mock(Customer.class);
 
-        when(customerMock.getSubName()).thenReturn(SUB_NAME);
+        when(customerMock.getSurname()).thenReturn(SURNAME);
 
         CustomerDto customerDto = this.customerDataToDtoConverter.convert(customerMock);
 
-        assertEquals(customerDto.getSubName(), customerMock.getSubName());
+        assertEquals(customerMock.getSurname(), customerDto.getSurname());
     }
 
     @Test
