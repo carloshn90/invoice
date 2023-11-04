@@ -48,7 +48,7 @@ public class InvoiceToDtoConverterTest {
 
         InvoiceDto invoiceDto = this.invoiceToDtoConverter.convert(invoiceMock);
 
-        assertEquals(invoiceDto.getId(), invoiceMock.getId());
+        assertEquals(invoiceMock.getId(), invoiceDto.getId());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class InvoiceToDtoConverterTest {
 
         InvoiceDto invoiceDto = this.invoiceToDtoConverter.convert(invoiceMock);
 
-        assertEquals(invoiceDto.getCreationDate(), invoiceMock.getCreationDate());
+        assertEquals(invoiceMock.getCreationDate(), invoiceDto.getCreationDate());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class InvoiceToDtoConverterTest {
 
         InvoiceDto invoiceDto = this.invoiceToDtoConverter.convert(invoiceMock);
 
-        assertEquals(invoiceDto.getTotal(), invoiceMock.getTotal());
+        assertEquals(invoiceMock.getTotal(), invoiceDto.getTotal());
     }
 
     @Test

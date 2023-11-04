@@ -167,6 +167,6 @@ public class ArticleControllerTest {
         String resultJson = mvcResult.getResponse().getContentAsString();
         List<ArticleDto> articleDtoResultList = this.objectMapper.readValue(resultJson, articleDtoListTypeReference);
         assertThat(articleDtoResultList, hasSize(1));
-        assertEquals(articleDtoResultList.get(0).getId(), articleDto.getId());
+        assertEquals(articleDto.getId(), articleDtoResultList.get(0).getId());
     }
 }

@@ -43,7 +43,7 @@ public class ArticleToDtoConverterTest {
 
         ArticleDto articleDto = this.articleToDtoConverter.convert(articleMock);
 
-        assertEquals(articleDto.getId(), articleMock.getId());
+        assertEquals(articleMock.getId(), articleDto.getId());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ArticleToDtoConverterTest {
 
         ArticleDto articleDto = this.articleToDtoConverter.convert(articleMock);
 
-        assertEquals(articleDto.getCode(), articleMock.getCode());
+        assertEquals(articleMock.getCode(), articleDto.getCode());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ArticleToDtoConverterTest {
 
         ArticleDto articleDto = this.articleToDtoConverter.convert(articleMock);
 
-        assertEquals(articleDto.getPrice(), articleMock.getPrice());
+        assertEquals(articleMock.getPrice(), articleDto.getPrice());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ArticleToDtoConverterTest {
 
         ArticleDto articleDto = this.articleToDtoConverter.convert(articleMock);
 
-        assertEquals(articleDto.getUnit(), articleMock.getUnit());
+        assertEquals(articleMock.getUnit(), articleDto.getUnit());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class ArticleToDtoConverterTest {
 
         ArticleDto articleDto = this.articleToDtoConverter.convert(articleMock);
 
-        assertEquals(articleDto.getActive(), articleMock.getActive());
+        assertEquals(articleMock.getActive(), articleDto.getActive());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ArticleToDtoConverterTest {
 
         ArticleDto articleDto = this.articleToDtoConverter.convert(articleMock);
 
-        assertEquals(articleDto.getName(), articleMock.getName());
+        assertEquals(articleMock.getName(), articleDto.getName());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class ArticleToDtoConverterTest {
 
         ArticleDto articleDto = this.articleToDtoConverter.convert(articleMock);
 
-        assertEquals(articleDto.getDescription(), articleMock.getDescription());
+        assertEquals(articleMock.getDescription(), articleDto.getDescription());
     }
 
 }

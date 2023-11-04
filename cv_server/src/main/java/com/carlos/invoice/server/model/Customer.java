@@ -16,8 +16,8 @@ public class Customer {
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "SUB_NAME", nullable = false)
-    private String subName;
+    @Column(name = "SURNAME", nullable = false)
+    private String surname;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "CUSTOMER_IDENTIFICATION_ID", referencedColumnName = "id")
@@ -47,12 +47,12 @@ public class Customer {
         this.name = name;
     }
 
-    public String getSubName() {
-        return subName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSubName(String subName) {
-        this.subName = subName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public CustomerIdentification getCustomerIdentification() {

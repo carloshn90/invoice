@@ -36,7 +36,7 @@ public class CustomerIdentificationDtoToModelConverterTest {
         CustomerIdentification customerIdentification =
                 this.customerIdentificationDtoToModelConverter.convert(customerIdentificationDtoMock);
 
-        assertEquals(customerIdentification.getId(), customerIdentificationDtoMock.getId());
+        assertEquals(customerIdentificationDtoMock.getId(), customerIdentification.getId());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class CustomerIdentificationDtoToModelConverterTest {
         CustomerIdentification customerIdentification =
                 this.customerIdentificationDtoToModelConverter.convert(customerIdentificationDtoMock);
 
-        assertEquals(customerIdentification.getDocumentTypeEnum(), customerIdentificationDtoMock.getDocumentTypeEnum());
+        assertEquals(customerIdentificationDtoMock.getDocumentTypeEnum(), customerIdentification.getDocumentTypeEnum());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class CustomerIdentificationDtoToModelConverterTest {
         CustomerIdentification customerIdentification =
                 this.customerIdentificationDtoToModelConverter.convert(customerIdentificationDtoMock);
 
-        assertEquals(customerIdentification.getDocumentNumber(), customerIdentificationDtoMock.getDocumentNumber());
+        assertEquals(customerIdentificationDtoMock.getDocumentNumber(), customerIdentification.getDocumentNumber());
     }
 
 }

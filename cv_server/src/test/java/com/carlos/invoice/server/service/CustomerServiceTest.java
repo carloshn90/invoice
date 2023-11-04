@@ -92,7 +92,7 @@ public class CustomerServiceTest {
 
         List<CustomerDto> customerDtoResultList = this.customerService.findAll();
 
-        assertEquals(customerDtoResultList, customerDtoListMock);
+        assertEquals(customerDtoListMock, customerDtoResultList);
 
         InOrder inOrder = inOrder(this.conversionService, this.customerDao);
         inOrder.verify(this.customerDao, times(1)).findAll();

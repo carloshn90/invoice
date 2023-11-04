@@ -106,7 +106,7 @@ public class ArticleServiceTest {
 
         List<ArticleDto> invoiceDtoResultList = this.articleService.findAll();
 
-        assertEquals(invoiceDtoResultList, articleDtoListMock);
+        assertEquals(articleDtoListMock, invoiceDtoResultList);
 
         InOrder inOrder = inOrder(this.conversionService, this.articleDao);
         inOrder.verify(this.articleDao, times(1)).findAll();

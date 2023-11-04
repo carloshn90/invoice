@@ -185,7 +185,7 @@ public class InvoiceControllerTest {
         String resultJson = mvcResult.getResponse().getContentAsString();
         List<InvoiceDto> invoiceDtoResultList = this.objectMapper.readValue(resultJson, invoiceDtoListTypeReference);
         assertThat(invoiceDtoResultList, hasSize(1));
-        assertEquals(invoiceDtoResultList.get(0).getId(), invoiceDto.getId());
+        assertEquals(invoiceDto.getId(), invoiceDtoResultList.get(0).getId());
     }
 
 }

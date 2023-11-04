@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc(secure = false)
+@AutoConfigureMockMvc
 @Transactional
 public class InvoiceControllerIT {
 
@@ -71,7 +71,7 @@ public class InvoiceControllerIT {
     @Test
     public void create_InvoiceToUpdateJson_Ok() throws Exception {
 
-        String invoiceDtoJson = "{\"customerDto\":{\"name\":\"Carlos_U\",\"subName\":" +
+        String invoiceDtoJson = "{\"customerDto\":{\"name\":\"Carlos_U\",\"surname\":" +
                 "\"Hernandez_U\",\"customerIdentificationDto\":{\"documentTypeEnum\":\"DNI\"," +
                 "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
                 "\"lineItemDtoList\":[{\"numberOfItem\":2,\"code\":\"123456_U\"," +
@@ -91,7 +91,7 @@ public class InvoiceControllerIT {
     public void update_InvoiceToUpdateJson_Ok() throws Exception {
 
         Long invoiceId = 1L;
-        String invoiceDtoJson = "{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos\",\"subName\":" +
+        String invoiceDtoJson = "{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos\",\"surname\":" +
                 "\"Hernandez\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
                 "\"documentNumber\":\"4475896X\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
                 "\"lineItemDtoList\":[{\"id\":1,\"numberOfItem\":1,\"code\":\"123456\"," +
@@ -110,9 +110,9 @@ public class InvoiceControllerIT {
     @Test
     public void findAll_InvoiceDtoListJson() throws Exception {
 
-        String resultExpected = "[{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos_U\",\"subName\":" +
+        String resultExpected = "[{\"id\":1,\"customerDto\":{\"id\":1,\"name\":\"Carlos_U\",\"surname\":" +
                 "\"Hernandez_U\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
-                "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+0000\"," +
+                "\"documentNumber\":\"4475896X_U\"}},\"creationDate\":\"2019-02-20T18:50:24.111+00:00\"," +
                 "\"lineItemDtoList\":[{\"id\":1,\"numberOfItem\":2,\"code\":\"123456_U\"," +
                 "\"priceItem\":7.0,\"total\":14.0}],\"total\":14.0}]";
 
@@ -126,7 +126,7 @@ public class InvoiceControllerIT {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        assertEquals(mvcResult.getResponse().getContentAsString(), resultExpected);
+        assertEquals(resultExpected, mvcResult.getResponse().getContentAsString());
     }
 
     @After

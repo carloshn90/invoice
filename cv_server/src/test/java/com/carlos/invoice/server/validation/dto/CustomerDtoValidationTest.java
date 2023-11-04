@@ -29,7 +29,7 @@ public class CustomerDtoValidationTest {
 
         validationMessageList = new ArrayList<>();
         validationMessageList.add("CustomerDto: name is null, empty or blank");
-        validationMessageList.add("CustomerDto: subName is null, empty or blank");
+        validationMessageList.add("CustomerDto: surname is null, empty or blank");
         validationMessageList.add("CustomerDto: customerIdentificationDto is null");
     }
 

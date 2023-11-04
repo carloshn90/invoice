@@ -117,7 +117,7 @@ public class ArticleControllerIT {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        assertEquals(mvcResult.getResponse().getContentAsString(), resultExpected);
+        assertEquals(resultExpected, mvcResult.getResponse().getContentAsString());
     }
 
     @After

@@ -10,6 +10,7 @@ spring:
   jpa:
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: update
         jdbc.lob.non_contextual_creation: true
         enable_lazy_load_no_trans: true

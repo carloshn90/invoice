@@ -11,8 +11,8 @@ public class CustomerDto implements IUpgradableDto {
     @NotBlank(message = "CustomerDto: name is null, empty or blank")
     private String name;
 
-    @NotBlank(message = "CustomerDto: subName is null, empty or blank")
-    private String subName;
+    @NotBlank(message = "CustomerDto: surname is null, empty or blank")
+    private String surname;
 
     @NotNull(message = "CustomerDto: customerIdentificationDto is null")
     @Valid
@@ -26,12 +26,12 @@ public class CustomerDto implements IUpgradableDto {
         this.name = name;
     }
 
-    public String getSubName() {
-        return subName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSubName(String subName) {
-        this.subName = subName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public CustomerIdentificationDto getCustomerIdentificationDto() {

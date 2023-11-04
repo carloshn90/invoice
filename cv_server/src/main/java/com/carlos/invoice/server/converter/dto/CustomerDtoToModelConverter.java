@@ -20,7 +20,7 @@ public class CustomerDtoToModelConverter extends RegisterConverter<CustomerDto, 
         Customer customer = new Customer();
         customer.setId(customerDto.getId());
         customer.setName(customerDto.getName());
-        customer.setSubName(customerDto.getSubName());
+        customer.setSurname(customerDto.getSurname());
 
         if (customerDto.getCustomerIdentificationDto() != null) {
             customer.setCustomerIdentification(convert(customerDto.getCustomerIdentificationDto(), CustomerIdentification.class));

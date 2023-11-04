@@ -52,7 +52,7 @@ public class CustomerControllerIT {
 
     @Test
     public void create_CustomerJson_Created() throws Exception {
-        String customerDtoJson = "{\"name\":\"Carlos_U\",\"subName\":" +
+        String customerDtoJson = "{\"name\":\"Carlos_U\",\"surname\":" +
                 "\"Hernandez_U\",\"customerIdentificationDto\":{\"documentTypeEnum\":\"DNI\"," +
                 "\"documentNumber\":\"4475896X_U\"}}";
 
@@ -88,7 +88,7 @@ public class CustomerControllerIT {
     public void update_CustomerToUpdateJson_Ok() throws Exception {
 
         Long customerId = 1L;
-        String customerDtoJson = "{\"id\":1,\"name\":\"Carlos\",\"subName\":" +
+        String customerDtoJson = "{\"id\":1,\"name\":\"Carlos\",\"surname\":" +
                 "\"Hernandez\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
                 "\"documentNumber\":\"4475896X\"}}";
 
@@ -105,7 +105,7 @@ public class CustomerControllerIT {
     @Test
     public void findAll_CustomerDtoListJson() throws Exception {
 
-        String resultExpected = "[{\"id\":1,\"name\":\"Carlos_U\",\"subName\":" +
+        String resultExpected = "[{\"id\":1,\"name\":\"Carlos_U\",\"surname\":" +
                 "\"Hernandez_U\",\"customerIdentificationDto\":{\"id\":1,\"documentTypeEnum\":\"DNI\"," +
                 "\"documentNumber\":\"4475896X_U\"}}]";
 
@@ -119,7 +119,7 @@ public class CustomerControllerIT {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        assertEquals(mvcResult.getResponse().getContentAsString(), resultExpected);
+        assertEquals(resultExpected, mvcResult.getResponse().getContentAsString());
     }
 
     @After
